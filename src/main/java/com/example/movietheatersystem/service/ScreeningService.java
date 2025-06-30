@@ -81,4 +81,7 @@ public class ScreeningService {
     public List<Screening> getAllMovies() {
         return screeningRepository.findAll(); // 返回所有场次信息
     }
+    public Screening getScreeningById(Long id) {
+        return screeningRepository.findById(id).orElse(null);
+    }
 }

@@ -31,7 +31,7 @@ const router = useRouter()
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/api/auth/login', {
+    const response = await axios.post('http://localhost:9000/api/auth/login', {
       username: form.value.username,
       password: form.value.password
     }, {
@@ -41,10 +41,12 @@ const handleLogin = async () => {
     })
 
     const token = response.data.token
+    // 假设后端返回的响应包含 userId
+    const userId = response.data.userId
 
-    // 存储 token 到 localStorage
+    // 存储 token 和 userId 到 localStorage
     localStorage.setItem('token', token)
-
+    localStorage.setItem('userId', userId)
     // 登录成功后跳转到主页或其他页面
     await router.push('/movies')
   } catch (error) {

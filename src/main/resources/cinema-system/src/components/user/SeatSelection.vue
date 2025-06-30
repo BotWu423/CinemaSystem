@@ -15,7 +15,7 @@
             :class="{
             available: seat.status === 'AVAILABLE',
             selected: selectedSeats.includes(seat.id),
-            occupied: seat.status !== 'AVAILABLE'
+            occupied: seat.status === 'OCCUPIED'
           }"
             @click="toggleSeat(seat)"
         >
@@ -35,16 +35,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import axios from 'axios';
-import { useRoute, useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
 
 // 接收参数
 const screeningId = ref(route.query.screeningId);
-const screeningRoomId = ref(null);
+const screeningRoomId = ref(route.query.screeningRoomId);
 const pricePerSeat = ref(0);
 
 // 响应式数据
@@ -55,17 +55,38 @@ const error = ref(null);
 
 // 请求头配置
 const token = localStorage.getItem('token');
-const apiBase = 'http://localhost:8080/api';
-
+const apiBase = 'http://localhost:9000/api';
 // 获取座位数据
 const fetchSeats = async () => {
   try {
-    const res = await axios.get(`${apiBase}/seats/by-screening-room?screeningRoomId=${screeningRoomId.value}`, {
+    // 打印 token、screeningId 和 screeningRoomId 以确保它们存在并且正确
+    console.log('Token:', token);
+    console.log('screeningId:', screeningId.value);
+    console.log('screeningRoomId:', screeningRoomId.value);
+
+    // 获取该放映厅的所有座位，同时传递 screeningId 和 screeningRoomId 参数
+    const seatRes = await axios.get(`${apiBase}/seats?screeningId=${screeningId.value}&screeningRoomId=${screeningRoomId.value}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
-    seats.value = res.data;
+
+    // 获取已预订的座位 ID
+    const bookedRes = await axios.get(`${apiBase}/orders/booked-seats?screeningId=${screeningId.value}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const bookedSeatIds = bookedRes.data;
+
+    // 更新座位状态
+    const updatedSeats = seatRes.data.map(seat => ({
+      ...seat,
+      status: bookedSeatIds.includes(seat.id) ? 'OCCUPIED' : 'AVAILABLE'
+    }));
+
+    seats.value = updatedSeats;
     loading.value = false;
   } catch (err) {
     console.error('获取座位失败', err);
@@ -74,7 +95,7 @@ const fetchSeats = async () => {
   }
 };
 
-// 获取场次详细信息（含价格、放映厅ID）
+// 获取场次详细信息（含价格）
 const fetchScreeningDetails = async () => {
   try {
     const res = await axios.get(`${apiBase}/screenings/${screeningId.value}`, {
@@ -83,7 +104,6 @@ const fetchScreeningDetails = async () => {
       }
     });
     pricePerSeat.value = res.data.price;
-    screeningRoomId.value = res.data.screeningRoom.id;
     await fetchSeats();
   } catch (err) {
     console.error('获取场次详情失败', err);
@@ -111,11 +131,19 @@ const totalPrice = computed(() => {
 // 下单提交
 const submitOrder = async () => {
   try {
-    await axios.post(
+    const userId = localStorage.getItem('userId');
+    console.log('userId:', userId);
+    console.log('screeningId:', screeningId.value);
+    console.log('seatIds:', selectedSeats.value);
+    console.log('totalPrice:', totalPrice.value);
+
+    const response = await axios.post(
         `${apiBase}/orders`,
         {
+          userId: userId,
           screeningId: screeningId.value,
-          seatIds: selectedSeats.value
+          seatIds: selectedSeats.value,
+          totalPrice: totalPrice.value
         },
         {
           headers: {
@@ -124,22 +152,42 @@ const submitOrder = async () => {
           }
         }
     );
-    alert('下单成功！');
-    router.push('/orders'); // 跳转至订单页
+    console.log('Response data:', response.data);
+    const order = response.data;
+    console.log('Order ID:', order.id);
+    console.log('User ID:', userId);
+    console.log('Screening ID:', screeningId.value);
+    router.push({
+      path: `/order-success/${order.id}`,
+      query: {
+        userId: userId,
+        screeningId: screeningId.value
+      }
+    });
   } catch (err) {
     console.error('下单失败', err);
-    alert('下单失败，请重试');
+    if (err.response && err.response.data && err.response.data.message) {
+      alert(`下单失败: ${err.response.data.message}`);
+    } else {
+      alert('下单失败，请检查网络或稍后再试');
+    }
   }
 };
 
 // 生命周期钩子
 onMounted(async () => {
-  if (!screeningId.value) {
-    alert('缺少必要参数 screeningId');
+  if (!screeningId.value || !screeningRoomId.value) {
+    alert('缺少必要参数 screeningId 或 screeningRoomId');
     router.back();
     return;
   }
   await fetchScreeningDetails();
+});
+
+// 计算总排数
+const totalRows = computed(() => {
+  const maxRow = seats.value.reduce((max, seat) => Math.max(max, seat.rowNumber), 0);
+  return Array.from({length: maxRow}, (_, i) => i + 1);
 });
 </script>
 

@@ -9,7 +9,7 @@
         <p>开始时间: {{ formatTime(showtime.startTime) }}</p>
         <p>结束时间: {{ formatTime(showtime.endTime) }}</p>
         <p>票价: ¥{{ showtime.price }}</p>
-        <button @click="bookSeats(showtime.id)">选座购票</button>
+        <button @click="bookSeats(showtime.id, showtime.screeningRoom.id)">选座购票</button>
       </li>
     </ul>
   </div>
@@ -34,7 +34,7 @@ export default {
   },
   mounted() {
     const cinemaId = this.$route.query.cinemaId;
-    this.cinemaName = this.$route.query.cinemaName; // 从路由参数中获取影院名称
+    this.cinemaName = this.$route.query.cinemaName;
     const movieId = this.$route.query.movieId;
 
     if (cinemaId && movieId) {
@@ -48,7 +48,7 @@ export default {
     async fetchShowtimes(cinemaId, movieId) {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:8080/api/screenings?cinemaId=${cinemaId}&movieId=${movieId}`, {
+        const response = await axios.get(`http://localhost:9000/api/screenings?cinemaId=${cinemaId}&movieId=${movieId}`, {
           headers: {
             'Authorization': 'Bearer ' + token
           }
@@ -65,8 +65,8 @@ export default {
     formatTime(dateTime) {
       return new Date(dateTime).toLocaleString();
     },
-    bookSeats(screeningId) {
-      this.router.push({ path: '/seats', query: { screeningId } });
+    bookSeats(screeningId, screeningRoomId) {
+      this.router.push({ path: '/seats', query: { screeningId, screeningRoomId } });
     }
   }
 };

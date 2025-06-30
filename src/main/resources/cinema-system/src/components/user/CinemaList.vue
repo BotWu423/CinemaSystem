@@ -27,7 +27,6 @@ export default {
     };
   },
   mounted() {
-    // 从路由查询参数中获取 movieId
     const movieId = this.$route.query.movieId;
 
     if (movieId) {
@@ -41,15 +40,12 @@ export default {
     async fetchCinemas(movieId) {
       try {
         const token = localStorage.getItem('token');
-        console.log('Token:', token);
-
-        const response = await axios.get(`http://localhost:8080/api/cinemas?movieId=${movieId}`, {
+        const response = await axios.get(`http://localhost:9000/api/cinemas?movieId=${movieId}`, {
           headers: {
             'Authorization': 'Bearer ' + token
           }
         });
 
-        console.log('Response:', response.data);
         this.cinemas = response.data;
         this.loading = false;
       } catch (error) {
@@ -61,7 +57,7 @@ export default {
       const movieId = this.$route.query.movieId;
       this.$router.push({
         path: '/screenings',
-        query: { cinemaId: cinemaId, movieId: movieId, cinemaName: cinemaName }
+        query: {cinemaId: cinemaId, movieId: movieId, cinemaName: cinemaName}
       });
     }
   }

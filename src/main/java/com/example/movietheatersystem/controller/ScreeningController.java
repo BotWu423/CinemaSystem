@@ -24,5 +24,12 @@ public class ScreeningController {
         List<Screening> screenings = screeningService.getScreeningsByCinemaAndMovie(cinemaId, movieId);
         return ResponseEntity.ok(screenings);
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Screening> getScreeningById(@PathVariable Long id) {
+        Screening screening = screeningService.getScreeningById(id);
+        if (screening == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(screening);
+    }
 }

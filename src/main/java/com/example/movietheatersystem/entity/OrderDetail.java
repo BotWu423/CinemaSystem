@@ -1,4 +1,5 @@
 package com.example.movietheatersystem.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ public class OrderDetail {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Order order;
 
     @ManyToOne

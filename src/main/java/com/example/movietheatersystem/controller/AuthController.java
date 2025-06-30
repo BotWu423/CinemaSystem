@@ -3,6 +3,7 @@ package com.example.movietheatersystem.controller;
 import com.example.movietheatersystem.dto.LoginRequest;
 import com.example.movietheatersystem.dto.LoginResponse;
 import com.example.movietheatersystem.security.JwtTokenProvider;
+import com.example.movietheatersystem.security.UserPrinciple;
 import com.example.movietheatersystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,11 @@ public class AuthController {
         // 生成 JWT Token
         String token = jwtTokenProvider.generateToken(authentication);
 
-        // 返回 Token 给前端
-        return ResponseEntity.ok(new LoginResponse(token));
+        // 获取用户信息
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        Long userId = userPrinciple.getId();
+
+        // 返回 Token 和 userId 给前端
+        return ResponseEntity.ok(new LoginResponse(token, userId));
     }
 }

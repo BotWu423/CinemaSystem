@@ -47,7 +47,7 @@ export default {
     async fetchMovies() {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8080/api/movies', {
+        const response = await axios.get('http://localhost:9000/api/movies', {
           headers: {
             'Authorization': 'Bearer ' + token
           }
