@@ -23,7 +23,7 @@ public class Seat {
     public enum SeatType {
         NORMAL, COUPLE, DISABLED
     }
-
+//废弃属性
     @Column(columnDefinition = "VARCHAR(20)")
     @Convert(converter = SeatStatusConverter.class)
     private SeatStatus status;
