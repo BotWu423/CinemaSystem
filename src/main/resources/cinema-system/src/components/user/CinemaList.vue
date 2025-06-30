@@ -1,6 +1,9 @@
 <template>
   <div class="cinema-list">
     <h1>电影院列表</h1>
+    <div v-if="isAdmin" class="admin-actions">
+      <button @click="goToAdminCinemaManagement">管理电影院</button>
+    </div>
     <div v-if="loading">加载中...</div>
     <ul v-else>
       <li v-for="cinema in cinemas" :key="cinema.id" class="cinema-item">
@@ -24,10 +27,12 @@ export default {
   data() {
     return {
       cinemas: [],
-      loading: true
+      loading: true,
+      isAdmin: false
     };
   },
   mounted() {
+    this.getCurrentUser();
     const movieId = this.$route.query.movieId;
 
     if (movieId) {
@@ -38,6 +43,16 @@ export default {
     }
   },
   methods: {
+    getCurrentUser() {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        this.isAdmin = payload.roles && payload.roles.includes('ADMIN');
+      } catch (e) {
+        console.error('解析 token 失败:', e);
+      }
+    },
     async fetchCinemas(movieId) {
       try {
         const token = localStorage.getItem('token');
@@ -60,6 +75,9 @@ export default {
         path: '/screenings',
         query: {cinemaId: cinemaId, movieId: movieId, cinemaName: cinemaName}
       });
+    },
+    goToAdminCinemaManagement() {
+      this.$router.push({ path: '/admin/cinemas-management' });
     }
   }
 };

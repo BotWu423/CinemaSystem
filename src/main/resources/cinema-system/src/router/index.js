@@ -60,9 +60,19 @@ const routes = [
         component: () => import('../components/user/Profile.vue')
     },
     {
+        path: '/movie-management/add',
+        name: 'AddMovie',
+        component: () => import('../components/admin/AddMovie.vue') // 假设你有这个组件
+    },
+    {
         path: '/add-activity',
         name: 'AddActivity',
         component: () => import('../components/user/AddActivity.vue')
+    },
+    {
+        path: '/admin/cinemas-management',
+        name: 'CinemaManagement',
+        component: () => import('../components/admin/CinemaManagement.vue'),
     }
 ]
 

@@ -3,6 +3,7 @@
     <div class="top-buttons">
       <button @click="goToActivity">近期活动</button>
       <button @click="goToProfile" style="margin-left: 10px;">个人中心</button>
+      <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto; background-color: #369d6b;">添加新电影</button>
     </div>
     <h1>电影列表</h1>
     <div v-if="loading">加载中...</div>
@@ -42,13 +43,32 @@ export default {
   data() {
     return {
       movies: [],
-      loading: true
+      loading: true,
+      currentUser: null,
+      isAdmin: false
     };
   },
+
   mounted() {
+    this.getCurrentUser();
     this.fetchMovies();
   },
   methods: {
+    getCurrentUser() {
+      const token = localStorage.getItem('token');
+      console.log('token:', token);
+      if (!token) return;
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1])); // 解析 JWT payload
+        this.currentUser = { id: payload.id, username: payload.sub };
+        this.isAdmin = payload.roles && payload.roles.includes('ADMIN');
+        console.log('isAdmin:', this.isAdmin);
+        console.log('currentUser:', this.currentUser);
+        console.log('roles:', payload.roles);
+      } catch (e) {
+        console.error('解析 token 失败:', e);
+      }
+    },
     async fetchMovies() {
       try {
         const token = localStorage.getItem('token');
@@ -77,6 +97,9 @@ export default {
     },
     goToProfile() {
       this.router.push({ path: '/profile' });
+    },
+    goToAddMovie() {
+      this.router.push({ path: '/movie-management/add' });
     }
   }
 };

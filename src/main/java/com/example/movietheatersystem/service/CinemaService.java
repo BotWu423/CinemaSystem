@@ -25,4 +25,10 @@ public class CinemaService {
     public List<Cinema> getCinemasByMovieId(Long movieId) {
         return cinemaRepository.findAllByIdInAndHasFutureScreenings(movieId);
     }
+    public List<Cinema> getAllCinemas() {
+        return cinemaRepository.findAll();
+    }
+    public Cinema addCinema(Cinema cinema) {
+        return cinemaRepository.save(cinema);
+    }
 }

@@ -15,10 +15,11 @@ public class CinemaController {
 
     @Autowired
     private CinemaService cinemaService;
-
-    /**
-     * 根据电影ID获取可用影院（有未开始场次的影院）
-     */
+    @GetMapping("/all")
+    public ResponseEntity<List<Cinema>> getAllCinemas() {
+        List<Cinema> cinemas = cinemaService.getAllCinemas();
+        return ResponseEntity.ok(cinemas);
+    }
     @GetMapping
     public ResponseEntity<List<Cinema>> getCinemasByMovieId(@RequestParam("movieId") Long movieId) {
         List<Cinema> cinemas = cinemaService.getCinemasByMovieId(movieId);
