@@ -24,6 +24,11 @@ const routes = [
         component: () => import('../components/user/CinemaList.vue')
     },
     {
+        path: '/register',
+        name: 'Register',
+        component: () => import('../components/auth/Register.vue')
+    },
+    {
         path: '/seats',
         name: 'SeatSelection',
         component: () => import('../components/user/SeatSelection.vue')
