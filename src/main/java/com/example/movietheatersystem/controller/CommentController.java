@@ -8,6 +8,7 @@ import com.example.movietheatersystem.repository.UserRepository;
 import com.example.movietheatersystem.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -60,5 +61,9 @@ public class CommentController {
         } else {
             return ResponseEntity.status(403).body("无权限删除");
         }
+    }
+    @GetMapping("/user/{userId}")
+    public List<Comment> getUserComments(@PathVariable Long userId) {
+        return commentRepository.findByUserId(userId);
     }
 } 

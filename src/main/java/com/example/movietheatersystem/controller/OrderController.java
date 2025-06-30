@@ -54,5 +54,13 @@ public class OrderController {
         Order order = orderService.getOrderById(orderId);
         return ResponseEntity.ok(order);
     }
-
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Void> cancelOrder(@PathVariable Long orderId) {
+        try {
+            orderService.cancelOrder(orderId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

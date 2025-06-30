@@ -10,4 +10,5 @@ import java.util.List;
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
     @Query("SELECT od.seat.id FROM OrderDetail od WHERE od.order.screening.id = :screeningId")
     List<Long> findBookedSeatIdsByScreeningId(@Param("screeningId") Long screeningId);
+    void deleteByOrderId(Long orderId);
 }

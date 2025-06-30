@@ -39,7 +39,7 @@ public class OrderService {
                 throw new RuntimeException("座位" + seat.getRowNumber() + "-" + seat.getSeatNumber() + "已被选");
             }
 
-            seat.setStatus(Seat.SeatStatus.OCCUPIED);
+            seat.setStatus(Seat.SeatStatus.AVAILABLE);
             seatRepository.save(seat);
         }
 
@@ -75,5 +75,12 @@ public class OrderService {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("订单不存在，ID: " + orderId));
     }
+    // 取消订单的方法
+    public void cancelOrder(Long orderId) {
+        // 1. 先删除订单详情
+        orderDetailRepository.deleteByOrderId(orderId);
 
+        // 2. 再删除主订单
+        orderRepository.deleteById(orderId);
+    }
 }

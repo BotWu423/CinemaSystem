@@ -3,6 +3,7 @@ package com.example.movietheatersystem.controller;
 import com.example.movietheatersystem.dto.ActivityDTO;
 import com.example.movietheatersystem.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -39,4 +40,15 @@ public class ActivityController {
     public void deleteActivity(@PathVariable Long id) {
         activityService.deleteActivity(id);
     }
+    @GetMapping("/user/{userId}")
+    public List<ActivityDTO> getUserActivities(@PathVariable Long userId) {
+        return activityService.getUserActivities(userId);
+    }
+    @PostMapping("/{id}/leave")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> leaveActivity(@PathVariable Long id, Authentication authentication) {
+        activityService.leaveActivity(id, authentication.getName());
+        return ResponseEntity.ok().build();
+    }
+
 }

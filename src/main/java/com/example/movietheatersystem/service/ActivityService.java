@@ -62,4 +62,23 @@ public class ActivityService {
         dto.setParticipants(activity.getParticipants().stream().map(User::getId).collect(Collectors.toList()));
         return dto;
     }
+    public List<ActivityDTO> getUserActivities(Long userId)
+    {
+        return activityRepository.findByParticipantsId(userId).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+    public void leaveActivity(Long activityId, String username) {
+        Activity activity = activityRepository.findById(activityId)
+                .orElseThrow(() -> new RuntimeException("活动不存在"));
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("用户不存在"));
+
+        if (!activity.getParticipants().contains(user)) {
+            throw new RuntimeException("你未参与该活动");
+        }
+
+        activity.getParticipants().remove(user);
+        activityRepository.save(activity);
+    }
+
 }
