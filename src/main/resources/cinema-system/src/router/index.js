@@ -37,6 +37,21 @@ const routes = [
         path: '/movie-detail',
         name: 'MovieDetail',
         component: () => import('../components/user/MovieDetail.vue')
+    },
+    {
+        path: '/activity',
+        name: 'Activity',
+        component: () => import('../components/user/Activity.vue')
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('../components/user/Profile.vue')
+    },
+    {
+        path: '/add-activity',
+        name: 'AddActivity',
+        component: () => import('../components/user/AddActivity.vue')
     }
 ]
 
