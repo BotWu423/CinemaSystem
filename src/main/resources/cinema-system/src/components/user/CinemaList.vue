@@ -10,6 +10,7 @@
           <p>联系方式: {{ cinema.contact }}</p>
           <p>描述: {{ cinema.description }}</p>
           <button @click="gotoScreeningList(cinema.id, cinema.name)">查看场次</button>
+          
         </div>
       </li>
     </ul>

@@ -12,6 +12,7 @@
           </el-form-item>
           <el-button type="primary" @click="handleLogin" style="width: 100%">登录</el-button>
         </el-form>
+        <el-button type="success" @click="goToRegister" style="width: 100%; margin-top: 10px;">注册</el-button>
       </el-card>
     </el-main>
   </el-container>
@@ -54,4 +55,8 @@ const handleLogin = async () => {
     alert('登录失败，请检查用户名或密码')
   }
 }
+
+const goToRegister = () => {
+  router.push('/register');
+};
 </script>

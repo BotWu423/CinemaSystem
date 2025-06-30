@@ -1,5 +1,9 @@
 <template>
   <div class="movie-list">
+    <div class="top-buttons">
+      <button @click="goToActivity">近期活动</button>
+      <button @click="goToProfile" style="margin-left: 10px;">个人中心</button>
+    </div>
     <h1>电影列表</h1>
     <div v-if="loading">加载中...</div>
     <ul v-else>
@@ -16,6 +20,7 @@
           <p>简介: {{ movie.description }}</p>
           <!-- 添加跳转按钮 -->
           <button @click="goToCinemas(movie.id)">选择影院</button>
+          <button @click="goToMovieDetail(movie.id)" style="margin-left: 10px;">查看详情</button>
         </div>
       </li>
     </ul>
@@ -62,6 +67,16 @@ export default {
     goToCinemas(movieId) {
       // 跳转到 /cinemas 页面，并携带 movieId 参数
       this.router.push({ path: '/cinemas', query: { movieId: movieId } });
+    },
+    goToMovieDetail(movieId) {
+      // 跳转到 /movie-detail 页面，并携带 movieId 参数
+      this.router.push({ path: '/movie-detail', query: { movieId: movieId } });
+    },
+    goToActivity() {
+      this.router.push({ path: '/activity' });
+    },
+    goToProfile() {
+      this.router.push({ path: '/profile' });
     }
   }
 };
@@ -95,6 +110,25 @@ button {
 }
 
 button:hover {
+  background-color: #369d6b;
+}
+
+.top-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.top-buttons button {
+  padding: 6px 12px;
+  background-color: #42b983;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.top-buttons button:hover {
   background-color: #369d6b;
 }
 </style>

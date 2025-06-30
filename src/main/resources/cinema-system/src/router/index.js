@@ -25,6 +25,11 @@ const routes = [
         component: () => import('../components/user/CinemaList.vue')
     },
     {
+        path: '/register',
+        name: 'Register',
+        component: () => import('../components/auth/Register.vue')
+    },
+    {
         path: '/seats',
         name: 'SeatSelection',
         component: () => import('../components/user/SeatSelection.vue')
@@ -38,8 +43,27 @@ const routes = [
         path: '/screenings',
         name: 'ScreeningList',
         component: () => import('../components/user/ScreeningList.vue')
+    },
+    {
+        path: '/movie-detail',
+        name: 'MovieDetail',
+        component: () => import('../components/user/MovieDetail.vue')
+    },
+    {
+        path: '/activity',
+        name: 'Activity',
+        component: () => import('../components/user/Activity.vue')
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('../components/user/Profile.vue')
+    },
+    {
+        path: '/add-activity',
+        name: 'AddActivity',
+        component: () => import('../components/user/AddActivity.vue')
     }
-
 ]
 
 const router = createRouter({
