@@ -16,6 +16,7 @@
           <p>简介: {{ movie.description }}</p>
           <!-- 添加跳转按钮 -->
           <button @click="goToCinemas(movie.id)">选择影院</button>
+          <button @click="goToMovieDetail(movie.id)" style="margin-left: 10px;">查看详情</button>
         </div>
       </li>
     </ul>
@@ -62,6 +63,10 @@ export default {
     goToCinemas(movieId) {
       // 跳转到 /cinemas 页面，并携带 movieId 参数
       this.router.push({ path: '/cinemas', query: { movieId: movieId } });
+    },
+    goToMovieDetail(movieId) {
+      // 跳转到 /movie-detail 页面，并携带 movieId 参数
+      this.router.push({ path: '/movie-detail', query: { movieId: movieId } });
     }
   }
 };

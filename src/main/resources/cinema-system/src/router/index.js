@@ -32,8 +32,12 @@ const routes = [
         path: '/screenings',
         name: 'ScreeningList',
         component: () => import('../components/user/ScreeningList.vue')
+    },
+    {
+        path: '/movie-detail',
+        name: 'MovieDetail',
+        component: () => import('../components/user/MovieDetail.vue')
     }
-
 ]
 
 const router = createRouter({
