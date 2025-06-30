@@ -71,7 +71,7 @@ export default {
       } catch (error) {
         console.error('获取电影详情失败:', error);
         this.loading = false;
-      }
+      }//111
     },
     async fetchComments() {
       try {
