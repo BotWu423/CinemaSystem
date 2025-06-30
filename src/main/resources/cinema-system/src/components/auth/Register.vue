@@ -14,7 +14,7 @@ const router = useRouter()
 
 const handleRegister = async () => {
   try {
-    await axios.post('http://localhost:8080/api/users/register', {
+    await axios.post('http://localhost:9000/api/users/register', {
       username: form.value.username,
       password: form.value.password,
       email: form.value.email,

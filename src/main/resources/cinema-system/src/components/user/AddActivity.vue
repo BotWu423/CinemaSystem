@@ -26,7 +26,7 @@ export default {
     async submitActivity() {
       const token = localStorage.getItem('token');
       const headers = token ? {Authorization: 'Bearer ' + token} : {};
-      await axios.post('http://localhost:8080/api/activities', this.activity, {headers});
+      await axios.post('http://localhost:9000/api/activities', this.activity, {headers});
       this.$router.push({path: '/activity'});
     }
   }

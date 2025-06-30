@@ -61,7 +61,7 @@ export default {
       try {
         const movieId = this.route.query.movieId;
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:8080/api/movies/${movieId}`, {
+        const response = await axios.get(`http://localhost:9000/api/movies/${movieId}`, {
           headers: {
             'Authorization': 'Bearer ' + token
           }
@@ -78,7 +78,7 @@ export default {
         const movieId = this.route.query.movieId;
         const token = localStorage.getItem('token');
         const headers = token ? { Authorization: 'Bearer ' + token } : {};
-        const response = await axios.get(`http://localhost:8080/api/comments/movie/${movieId}`, { headers });
+        const response = await axios.get(`http://localhost:9000/api/comments/movie/${movieId}`, { headers });
         this.comments = response.data;
       } catch (e) {
         this.comments = [];
@@ -89,7 +89,7 @@ export default {
       const token = localStorage.getItem('token');
       const movieId = this.route.query.movieId;
       try {
-        await axios.post('http://localhost:8080/api/comments', {
+        await axios.post('http://localhost:9000/api/comments', {
           movieId,
           content: this.newComment
         }, {
@@ -104,7 +104,7 @@ export default {
     async deleteComment(commentId) {
       const token = localStorage.getItem('token');
       try {
-        await axios.delete(`http://localhost:8080/api/comments/${commentId}`, {
+        await axios.delete(`http://localhost:9000/api/comments/${commentId}`, {
           headers: { Authorization: 'Bearer ' + token }
         });
         this.fetchComments();

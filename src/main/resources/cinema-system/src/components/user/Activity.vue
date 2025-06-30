@@ -56,26 +56,26 @@ export default {
     async fetchActivities() {
       const token = localStorage.getItem('token');
       const headers = token ? { Authorization: 'Bearer ' + token } : {};
-      const res = await axios.get('http://localhost:8080/api/activities', { headers });
+      const res = await axios.get('http://localhost:9000/api/activities', { headers });
       this.activities = res.data;
     },
     async publishActivity() {
       const token = localStorage.getItem('token');
       const headers = token ? { Authorization: 'Bearer ' + token } : {};
-      await axios.post('http://localhost:8080/api/activities', this.newActivity, { headers });
+      await axios.post('http://localhost:9000/api/activities', this.newActivity, { headers });
       this.newActivity = { name: '', description: '', quota: 1 };
       this.fetchActivities();
     },
     async joinActivity(activityId) {
       const token = localStorage.getItem('token');
       const headers = token ? { Authorization: 'Bearer ' + token } : {};
-      await axios.post(`http://localhost:8080/api/activities/${activityId}/join`, {}, { headers });
+      await axios.post(`http://localhost:9000/api/activities/${activityId}/join`, {}, { headers });
       this.fetchActivities();
     },
     async deleteActivity(activityId) {
       const token = localStorage.getItem('token');
       const headers = token ? { Authorization: 'Bearer ' + token } : {};
-      await axios.delete(`http://localhost:8080/api/activities/${activityId}`, { headers });
+      await axios.delete(`http://localhost:9000/api/activities/${activityId}`, { headers });
       this.fetchActivities();
     },
     goToAddActivity() {
