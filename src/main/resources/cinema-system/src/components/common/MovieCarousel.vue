@@ -23,7 +23,7 @@ const router = useRouter();
 const movies = ref([]);
 const offset = ref(0);
 let animationFrameId = null;
-const speed = -1; // 滚动速度（负值表示向左）
+const speed = -0.5; // 滚动速度（负值表示向左）
 
 // 获取推荐电影数据
 async function fetchFeaturedMovies() {
