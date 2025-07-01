@@ -2,16 +2,15 @@ package com.example.movietheatersystem.controller;
 
 import com.example.movietheatersystem.dto.AddScreeningRoomRequest;
 import com.example.movietheatersystem.dto.ScreeningDTO;
-import com.example.movietheatersystem.entity.Cinema;
-import com.example.movietheatersystem.entity.Movie;
-import com.example.movietheatersystem.entity.Screening;
-import com.example.movietheatersystem.entity.ScreeningRoom;
+import com.example.movietheatersystem.entity.*;
+import com.example.movietheatersystem.repository.SeatRepository;
 import com.example.movietheatersystem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +29,10 @@ public class AdminController {
     private ScreeningService screeningService;
     @Autowired
     private ScreeningRoomService screeningRoomService;
+    @Autowired
+    private SeatRepository seatRepository;
+    @Autowired
+    private SeatService seatService;
 
     // 添加放映厅
     @PostMapping("movie-management/add")
@@ -67,7 +70,6 @@ public class AdminController {
     // 添加放映室
     @PostMapping("/rooms")
     public ResponseEntity<ScreeningRoom> addScreeningRoom(@RequestBody AddScreeningRoomRequest request) {
-        // 获取影院信息，若不存在则抛出异常
         Cinema cinema = cinemaService.getCinemaById(request.getCinemaId())
                 .orElseThrow(() -> new RuntimeException("影院不存在"));
 
@@ -76,20 +78,51 @@ public class AdminController {
         room.setCinema(cinema);
         room.setLayout(request.getLayout());
 
-        // 解析 layout 计算总座位数
+        List<Seat> seats = new ArrayList<>();
+
         try {
-            String[] parts = request.getLayout().split("x");
+            String layout = request.getLayout();
+            if (layout == null || !layout.matches("\\d+x\\d+")) {
+                throw new RuntimeException("座位布局格式错误，请使用类似 5x8 的格式");
+            }
+
+            String[] parts = layout.split("x");
             int rows = Integer.parseInt(parts[0]);
             int cols = Integer.parseInt(parts[1]);
-            room.setTotalSeats(rows * cols);
+            int totalSeats = rows * cols;
+
+            room.setTotalSeats(totalSeats);
+
+            // Step 1: 先保存放映室
+            ScreeningRoom savedRoom = adminService.addScreeningRoom(room);
+
+            // Step 2: 使用已保存的放映室 ID 创建座位
+            for (int row = 1; row <= rows; row++) {
+                for (int col = 1; col <= cols; col++) {
+                    Seat seat = new Seat();
+                    seat.setRowNumber(row);
+                    seat.setSeatNumber(col);
+                    seat.setSeatType(Seat.SeatType.NORMAL);
+                    seat.setStatus(Seat.SeatStatus.AVAILABLE);
+                    seat.setScreeningRoom(savedRoom); // 使用已保存的放映室
+                    seats.add(seat);
+                }
+            }
+
+            // Step 3: 保存座位
+            System.out.println("开始保存 " + seats.size() + " 个座位");
+            seatService.saveAllSeats(seats);
+            System.out.println("座位保存完成");
+
+            return ResponseEntity.ok(savedRoom);
+
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("座位布局必须是数字x数字，如 5x8", e);
         } catch (Exception e) {
-            throw new RuntimeException("座位布局格式错误，请使用类似 5x8 的格式");
+            e.printStackTrace();
+            throw new RuntimeException("座位布局处理失败：" + e.getMessage(), e);
         }
-
-        ScreeningRoom savedRoom = adminService.addScreeningRoom(room);
-        return ResponseEntity.ok(savedRoom);
     }
-
 
 
 }

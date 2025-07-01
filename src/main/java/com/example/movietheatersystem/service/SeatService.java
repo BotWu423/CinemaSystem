@@ -62,4 +62,7 @@ public class SeatService {
 
         return seatRepository.findByScreeningRoom(room);
     }
+    public List<Seat> saveAllSeats(List<Seat> seats) {
+        return seatRepository.saveAll(seats);
+    }
 }
