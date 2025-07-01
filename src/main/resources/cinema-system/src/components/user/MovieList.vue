@@ -3,6 +3,7 @@
     <div class="top-buttons">
       <button @click="goToActivity">近期活动</button>
       <button @click="goToProfile" style="margin-left: 10px;">个人中心</button>
+      <button v-if="isAdmin" @click="goToOrderManagement" style="margin-left: 10px; background-color: #e67e22;">订单管理</button>
       <button v-if="isAdmin" @click="goToWorkLog" style="margin-left: 10px; background-color: #f5a623;">每日工作记录</button>
       <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto; background-color: #369d6b;">添加新电影</button>
     </div>
@@ -113,6 +114,9 @@ export default {
     },
     goToWorkLog() {
       this.router.push({ path: '/work-log' });
+    },
+    goToOrderManagement() {
+      this.router.push({ path: '/order-management' });
     }
   }
 };
