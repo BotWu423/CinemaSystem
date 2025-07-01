@@ -29,4 +29,19 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+    public boolean changePassword(Long userId, String oldPassword, String newPassword) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("用户不存在"));
+        // 校验原密码
+        if (!com.example.movietheatersystem.tool.BCryptUtil.isPasswordMatch(oldPassword, user.getPassword())) {
+            return false;
+        }
+        user.setPassword(com.example.movietheatersystem.tool.BCryptUtil.encryptPassword(newPassword));
+        userRepository.save(user);
+        return true;
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 }

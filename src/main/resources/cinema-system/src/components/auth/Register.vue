@@ -13,6 +13,10 @@ const form = ref({
 const router = useRouter()
 
 const handleRegister = async () => {
+  if (!form.value.username || !form.value.password) {
+    alert('用户名和密码不能为空！')
+    return
+  }
   try {
     await axios.post('http://localhost:9000/api/users/register', {
       username: form.value.username,
