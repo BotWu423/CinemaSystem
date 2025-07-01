@@ -32,6 +32,22 @@
         </div>
       </li>
     </ul>
+    <!-- 在 </ul> 结束标签后添加如下代码 -->
+    <div class="cinema-list-section">
+      <h2>热门影院</h2>
+      <div v-if="loadingCinemas">加载中...</div>
+      <ul v-else>
+        <li v-for="cinema in cinemas" :key="cinema.id" class="cinema-item">
+          <img :src="cinema.posterUrl || 'https://img.picui.cn/free/2025/07/01/686387241876a.jpg'" alt="影院图片" width="150" />
+          <div class="cinema-info">
+            <h4>{{ cinema.name }}</h4>
+            <p>地址: {{ cinema.address }}</p>
+            <button @click="goToCinemas(cinema.id)">查看场次</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
   </div>
 </template>
 
@@ -56,13 +72,16 @@ export default {
       movies: [],
       loading: true,
       currentUser: null,
-      isAdmin: false
+      isAdmin: false,
+      cinemas: [],
+      loadingCinemas: true
     };
   },
 
   mounted() {
     this.getCurrentUser();
     this.fetchMovies();
+    this.fetchCinemas();
   },
   methods: {
     getCurrentUser() {
@@ -93,6 +112,19 @@ export default {
       } catch (error) {
         console.error('获取电影失败:', error);
         this.loading = false;
+      }
+    },
+    async fetchCinemas() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:9000/api/cinemas/all', {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+        this.cinemas = response.data;
+      } catch (error) {
+        console.error('获取影院失败:', error);
+      } finally {
+        this.loadingCinemas = false;
       }
     },
     goToCinemas(movieId) {
@@ -174,4 +206,31 @@ button:hover {
 .top-buttons button:hover {
   background-color: #369d6b;
 }
+.cinema-list-section {
+  margin-top: 40px;
+}
+
+.cinema-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.cinema-item img {
+  margin-right: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cinema-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cinema-info h4 {
+  margin: 0;
+}
+
 </style>

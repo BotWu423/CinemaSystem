@@ -89,7 +89,13 @@ const routes = [
         path: '/admin/screening-schedule',
         name: 'AddScreening',
         component: () => import('@/components/admin/ScreeningSchedule.vue')
+    },
+    {
+        path: '/cinema-detail',
+        name: 'CinemaDetail',
+        component: () => import('../components/user/CinemaDetail.vue')
     }
+
 ]
 
 const router = createRouter({
