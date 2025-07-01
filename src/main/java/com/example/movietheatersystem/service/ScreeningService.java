@@ -1,13 +1,7 @@
 package com.example.movietheatersystem.service;
 
-import com.example.movietheatersystem.entity.Order;
-import com.example.movietheatersystem.entity.OrderDetail;
-import com.example.movietheatersystem.entity.Screening;
-import com.example.movietheatersystem.entity.Seat;
-import com.example.movietheatersystem.repository.OrderRepository;
-import com.example.movietheatersystem.repository.ScreeningRepository;
-import com.example.movietheatersystem.repository.SeatRepository;
-import com.example.movietheatersystem.repository.UserRepository;
+import com.example.movietheatersystem.entity.*;
+import com.example.movietheatersystem.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +19,7 @@ public class ScreeningService {
     private SeatRepository seatRepository;
     private OrderRepository orderRepository;
     private UserRepository userRepository;
+    private ScreeningRoomRepository screeningRoomRepository;
 
     public List<Screening> getScreeningsByCinemaAndMovie(Long cinemaId, Long movieId) {
         return screeningRepository.findByScreeningRoom_Cinema_IdAndMovie_Id(cinemaId, movieId);
@@ -83,5 +78,12 @@ public class ScreeningService {
     }
     public Screening getScreeningById(Long id) {
         return screeningRepository.findById(id).orElse(null);
+    }
+    public List<Screening> getAllScreenings(){
+        return screeningRepository.findAll();
+    }
+    public List<ScreeningRoom> getAllScreeningRooms()
+    {
+        return screeningRoomRepository.findAll();
     }
 }

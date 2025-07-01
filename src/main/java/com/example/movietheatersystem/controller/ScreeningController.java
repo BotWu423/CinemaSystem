@@ -32,4 +32,10 @@ public class ScreeningController {
         }
         return ResponseEntity.ok(screening);
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<Screening>> getAllScreenings() {
+        List<Screening> screenings = screeningService.getAllScreenings();
+        return ResponseEntity.ok(screenings);
+    }
+    // 添加新场次（管理员权限）
 }

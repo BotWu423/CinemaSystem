@@ -73,6 +73,11 @@ const routes = [
         path: '/admin/cinemas-management',
         name: 'CinemaManagement',
         component: () => import('../components/admin/CinemaManagement.vue'),
+    },
+    {
+        path: '/admin/screening-schedule',
+        name: 'AddScreening',
+        component: () => import('@/components/admin/ScreeningSchedule.vue')
     }
 ]
 

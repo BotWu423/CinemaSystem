@@ -29,6 +29,7 @@ public class ScreeningRoom {
         this.id = id;
     }
 
+
     public Cinema getCinema() {
         return cinema;
     }

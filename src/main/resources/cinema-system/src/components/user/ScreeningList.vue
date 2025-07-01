@@ -12,6 +12,9 @@
         <button @click="bookSeats(showtime.id, showtime.screeningRoom.id)">选座购票</button>
       </li>
     </ul>
+    <div v-if="isAdmin" class="admin-actions">
+      <button @click="goToAddScreening">添加场次</button>
+    </div>
   </div>
 </template>
 
@@ -29,10 +32,12 @@ export default {
       showtimes: [],
       cinemaName: '',
       loading: true,
-      error: null
+      error: null,
+      isAdmin: false
     };
   },
   mounted() {
+    this.getCurrentUser();
     const cinemaId = this.$route.query.cinemaId;
     this.cinemaName = this.$route.query.cinemaName;
     const movieId = this.$route.query.movieId;
@@ -45,6 +50,16 @@ export default {
     }
   },
   methods: {
+    getCurrentUser() {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1])); // 解析 JWT payload
+        this.isAdmin = payload.roles && payload.roles.includes('ADMIN');
+      } catch (e) {
+        console.error('解析 token 失败:', e);
+      }
+    },
     async fetchShowtimes(cinemaId, movieId) {
       try {
         const token = localStorage.getItem('token');
@@ -67,8 +82,14 @@ export default {
     },
     bookSeats(screeningId, screeningRoomId) {
       this.router.push({ path: '/seats', query: { screeningId, screeningRoomId } });
+    },
+    goToAddScreening() {
+      this.$router.push({
+        path: '/admin/screening-schedule'
+      });
     }
   }
+
 };
 </script>
 
