@@ -1,5 +1,6 @@
 package com.example.movietheatersystem.controller;
 
+import com.example.movietheatersystem.dto.AddScreeningRoomRequest;
 import com.example.movietheatersystem.dto.ScreeningDTO;
 import com.example.movietheatersystem.entity.Cinema;
 import com.example.movietheatersystem.entity.Movie;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,18 +32,6 @@ public class AdminController {
     private ScreeningRoomService screeningRoomService;
 
     // 添加放映厅
-    @PostMapping("/rooms")
-    public ResponseEntity<ScreeningRoom> addScreeningRoom(@RequestBody ScreeningRoom screeningRoom) {
-        return ResponseEntity.ok(adminService.addScreeningRoom(screeningRoom));
-    }
-
-    // 更新座位布局
-    @PutMapping("/rooms/{roomId}/layout")
-    public ResponseEntity<?> updateSeatLayout(@PathVariable Long roomId, @RequestBody Map<String, Object> payload) {
-        String layoutJson = payload.get("layoutJson").toString();
-        adminService.updateSeatLayout(roomId, layoutJson);
-        return ResponseEntity.ok().build();
-    }
     @PostMapping("movie-management/add")
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
         Movie savedMovie = movieService.addMovie(movie);
@@ -73,4 +63,33 @@ public class AdminController {
 
         return ResponseEntity.ok(savedScreening);
     }
+    // 获取所有放映室
+    // 添加放映室
+    @PostMapping("/rooms")
+    public ResponseEntity<ScreeningRoom> addScreeningRoom(@RequestBody AddScreeningRoomRequest request) {
+        // 获取影院信息，若不存在则抛出异常
+        Cinema cinema = cinemaService.getCinemaById(request.getCinemaId())
+                .orElseThrow(() -> new RuntimeException("影院不存在"));
+
+        ScreeningRoom room = new ScreeningRoom();
+        room.setName(request.getName());
+        room.setCinema(cinema);
+        room.setLayout(request.getLayout());
+
+        // 解析 layout 计算总座位数
+        try {
+            String[] parts = request.getLayout().split("x");
+            int rows = Integer.parseInt(parts[0]);
+            int cols = Integer.parseInt(parts[1]);
+            room.setTotalSeats(rows * cols);
+        } catch (Exception e) {
+            throw new RuntimeException("座位布局格式错误，请使用类似 5x8 的格式");
+        }
+
+        ScreeningRoom savedRoom = adminService.addScreeningRoom(room);
+        return ResponseEntity.ok(savedRoom);
+    }
+
+
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CinemaService {
@@ -25,6 +26,10 @@ public class CinemaService {
     public List<Cinema> getCinemasByMovieId(Long movieId) {
         return cinemaRepository.findAllByIdInAndHasFutureScreenings(movieId);
     }
+    public Optional<Cinema> getCinemaById(Long id) {
+        return cinemaRepository.findById(id);
+    }
+
     public List<Cinema> getAllCinemas() {
         return cinemaRepository.findAll();
     }

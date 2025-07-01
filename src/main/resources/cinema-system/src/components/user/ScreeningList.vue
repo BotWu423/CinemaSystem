@@ -14,6 +14,7 @@
     </ul>
     <div v-if="isAdmin" class="admin-actions">
       <button @click="goToAddScreening">添加场次</button>
+      <button @click="goToAddScreeningRoom">添加放映室</button>
     </div>
   </div>
 </template>
@@ -86,6 +87,11 @@ export default {
     goToAddScreening() {
       this.$router.push({
         path: '/admin/screening-schedule'
+      });
+    },
+    goToAddScreeningRoom() {
+      this.$router.push({
+        path: '/admin/RoomManagement'
       });
     }
   }

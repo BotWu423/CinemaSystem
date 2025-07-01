@@ -63,6 +63,7 @@ export default {
         });
 
         this.cinemas = response.data;
+        console.log("cinema=",response.data)
         this.loading = false;
       } catch (error) {
         console.error('获取电影院失败:', error.response ? error.response.data : error.message);

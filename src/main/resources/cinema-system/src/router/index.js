@@ -83,6 +83,11 @@ const routes = [
         path: '/admin/screening-schedule',
         name: 'AddScreening',
         component: () => import('@/components/admin/ScreeningSchedule.vue')
+    },
+    {
+        path: '/admin/RoomManagement',
+        name: 'RoomManagement',
+        component: () => import('@/components/admin/RoomManagement.vue')
     }
 ]
 
