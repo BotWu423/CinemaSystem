@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import com.example.movietheatersystem.dto.OrderAdminDTO;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -62,5 +65,31 @@ public class OrderController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<OrderAdminDTO>> getAllOrders() {
+        List<Order> orders = orderService.getAllOrders();
+        List<OrderAdminDTO> dtos = orders.stream().map(order -> {
+            OrderAdminDTO dto = new OrderAdminDTO();
+            dto.setId(order.getId());
+            dto.setUsername(order.getUser() != null ? order.getUser().getUsername() : "-");
+            dto.setMovieTitle(order.getScreening() != null && order.getScreening().getMovie() != null ? order.getScreening().getMovie().getTitle() : "-");
+            dto.setCinemaName(order.getScreening() != null && order.getScreening().getScreeningRoom() != null && order.getScreening().getScreeningRoom().getCinema() != null ? order.getScreening().getScreeningRoom().getCinema().getName() : "-");
+            dto.setScreeningRoomName(order.getScreening() != null && order.getScreening().getScreeningRoom() != null ? order.getScreening().getScreeningRoom().getName() : "-");
+            dto.setScreeningTime(order.getScreening() != null ? order.getScreening().getStartTime() : null);
+            dto.setTotalPrice(order.getTotalPrice());
+            dto.setCreateTime(order.getCreateTime());
+            dto.setStatus(order.getStatus() != null ? order.getStatus().name() : "-");
+            if (order.getDetails() != null) {
+                dto.setSeatInfo(order.getDetails().stream()
+                    .map(d -> d.getSeat().getRowNumber() + "-" + d.getSeat().getSeatNumber())
+                    .collect(Collectors.joining(", "))
+                );
+            } else {
+                dto.setSeatInfo("-");
+            }
+            return dto;
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 }

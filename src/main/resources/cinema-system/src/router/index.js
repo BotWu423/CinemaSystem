@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../components/auth/LoginPage.vue'
 import OrderSuccess from "@/components/user/OrderSuccess.vue";
 import WorkLog from '@/components/user/WorkLog.vue'
+import OrderManagement from '@/components/admin/OrderManagement.vue';
 
 const routes = [
     {
@@ -33,6 +34,11 @@ const routes = [
         path: '/seats',
         name: 'SeatSelection',
         component: () => import('../components/user/SeatSelection.vue')
+    },
+    {
+        path: '/order-management',
+        name: 'OrderManagement',
+        component: OrderManagement
     },
     {
         path: '/work-log',
@@ -88,6 +94,11 @@ const routes = [
         path: '/admin/RoomManagement',
         name: 'RoomManagement',
         component: () => import('@/components/admin/RoomManagement.vue')
+    },
+    {
+        path: '/cinema-detail',
+        name: 'CinemaDetail',
+        component: () => import('../components/user/CinemaDetail.vue')
     }
 ]
 

@@ -83,4 +83,8 @@ public class OrderService {
         // 2. 再删除主订单
         orderRepository.deleteById(orderId);
     }
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
 }
