@@ -20,6 +20,10 @@ public class MovieService {
         return movieRepository.findAll(); // 获取所有电影
     }
 
+    public List<Movie> getCurrentMoviesByCinemaId(Long cinemaId) {
+        return movieRepository.findCurrentMoviesByCinemaId(cinemaId);
+    }
+
     public Movie getMovieById(Long id) {
         return movieRepository.findById(id).orElse(null); // 根据ID获取电影
     }

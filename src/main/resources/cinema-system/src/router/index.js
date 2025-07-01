@@ -73,7 +73,13 @@ const routes = [
         path: '/admin/cinemas-management',
         name: 'CinemaManagement',
         component: () => import('../components/admin/CinemaManagement.vue'),
+    },
+    {
+        path: '/cinema-detail',
+        name: 'CinemaDetail',
+        component: () => import('../components/user/CinemaDetail.vue')
     }
+
 ]
 
 const router = createRouter({
