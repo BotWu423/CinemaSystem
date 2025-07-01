@@ -3,9 +3,14 @@
     <!-- 添加放映室 -->
     <form @submit.prevent="addRoom" class="add-form">
       <h3>添加新放映室</h3>
-      <label>所属影院ID：
-        <input v-model.number="newRoom.cinemaId" type="number" required />
+      <label>所属影院：
+        <select v-model.number="newRoom.cinemaId" required>
+          <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema.id">
+            {{ cinema.name }}
+          </option>
+        </select>
       </label>
+
       <label>名称：
         <input v-model="newRoom.name" required />
       </label>
@@ -24,6 +29,7 @@
           <th>ID</th>
           <th>名称</th>
           <th>影院</th>
+          <th>操作</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +37,9 @@
           <td>{{ room.id }}</td>
           <td>{{ room.name }}</td>
           <td>{{ room.cinemaName }}</td>
+          <td>
+            <button @click="deleteRoom(room.id)">删除</button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -103,6 +112,21 @@ const fetchCinemas = async () => {
     console.log('cinemas:', cinemas.value);
   } catch (error) {
     console.error('获取影院失败:', error);
+  }
+};
+const deleteRoom = async (roomId) => {
+  try {
+    const token = getToken();
+    await axios.delete(`http://localhost:9000/api/screening-rooms/${roomId}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    alert('放映室删除成功');
+    await fetchRooms(); // 刷新列表
+  } catch (error) {
+    console.error('删除失败:', error);
+    alert('删除失败，请检查网络或权限');
   }
 };
 

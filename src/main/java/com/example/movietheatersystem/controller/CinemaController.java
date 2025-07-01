@@ -1,7 +1,9 @@
 package com.example.movietheatersystem.controller;
 
 import com.example.movietheatersystem.entity.Cinema;
+import com.example.movietheatersystem.entity.ScreeningRoom;
 import com.example.movietheatersystem.service.CinemaService;
+import com.example.movietheatersystem.service.ScreeningRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ public class CinemaController {
 
     @Autowired
     private CinemaService cinemaService;
+    @Autowired
+    private ScreeningRoomService screeningRoomService;
     @GetMapping("/all")
     public ResponseEntity<List<Cinema>> getAllCinemas() {
         List<Cinema> cinemas = cinemaService.getAllCinemas();
@@ -37,4 +41,10 @@ public class CinemaController {
         return ResponseEntity.ok(cinema);
     }
 
+    @DeleteMapping("/{cinemaId}")
+    public ResponseEntity<String> deleteCinema(@PathVariable Long cinemaId) {
+        screeningRoomService.deleteBycinemaId(cinemaId);
+        cinemaService.deleteCinema(cinemaId);
+        return ResponseEntity.ok("影院及其数据已成功删除");
+    }
 }

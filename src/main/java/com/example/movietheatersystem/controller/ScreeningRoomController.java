@@ -21,5 +21,10 @@ public class ScreeningRoomController {
         List<ScreeningRoomDTO> rooms = screeningRoomService.getAllScreeningRooms();
         return ResponseEntity.ok(rooms);
     }
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity<String> deleteScreeningRoom(@PathVariable Long roomId) {
+        screeningRoomService.deleteScreeningRoomWithDependencies(roomId);
+        return ResponseEntity.ok("放映室及其相关数据已成功删除");
+    }
 
 }

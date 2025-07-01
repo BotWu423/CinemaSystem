@@ -86,4 +86,14 @@ public class ScreeningService {
     {
         return screeningRoomRepository.findAll();
     }
+    // 根据放映室 ID 删除所有场次
+    @Transactional
+    public void deleteScreening(Long screeningId) {
+        screeningRepository.deleteById(screeningId);
+    }
+
+    public List<Screening> findByScreeningRoomId(Long roomId) {
+        return screeningRepository.findByScreeningRoomId(roomId);
+    }
+
 }

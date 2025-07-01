@@ -27,7 +27,7 @@
         <tr v-for="cinema in cinemas" :key="cinema.id">
           <td>{{ cinema.name }}</td>
           <td>{{ cinema.address }}</td>
-          <td>{{ cinema.contact }}</td>
+          <td><button @click="deleteCinema(cinema.id)">删除</button></td>
         </tr>
         </tbody>
       </table>
@@ -79,7 +79,22 @@ export default {
         console.error('添加电影院失败:', error);
         alert('添加失败，请重试');
       }
+    },
+    async deleteCinema(cinemaId) {
+      if (!confirm('确定要删除该影院吗？')) return;
+      const token = localStorage.getItem('token');
+      try {
+        await axios.delete(`http://localhost:9000/api/cinemas/${cinemaId}`, {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+        alert('影院删除成功');
+        this.fetchCinemas(); // 刷新列表
+      } catch (error) {
+        console.error('删除影院失败:', error);
+        alert('删除失败，请重试');
+      }
     }
+
   }
 };
 </script>

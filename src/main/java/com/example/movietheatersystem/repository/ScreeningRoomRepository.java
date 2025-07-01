@@ -11,4 +11,6 @@ import java.util.List;
 public interface ScreeningRoomRepository extends JpaRepository<ScreeningRoom, Long> {
     @Query("SELECT new com.example.movietheatersystem.dto.ScreeningRoomDTO(r.id, r.name, r.cinema.name) FROM ScreeningRoom r JOIN r.cinema c")
     List<ScreeningRoomDTO> findAllWithCinemaName();
+    @Query("SELECT r FROM ScreeningRoom r WHERE r.cinema.id = :cinemaId")
+    List<ScreeningRoom> findByCinemaId(Long cinemaId);
 }

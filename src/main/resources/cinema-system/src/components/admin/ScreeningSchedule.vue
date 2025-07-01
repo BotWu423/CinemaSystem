@@ -46,6 +46,7 @@
         <th>放映厅</th>
         <th>开始时间</th>
         <th>票价</th>
+        <th>操作</th>
       </tr>
       </thead>
       <tbody>
@@ -54,6 +55,7 @@
         <td>{{ item.screeningRoom.name }}</td>
         <td>{{ formatTime(item.startTime) }}</td>
         <td>¥{{ item.price }}</td>
+        <td><button @click="deleteScreening(item.id)">删除</button></td>
       </tr>
       </tbody>
     </table>
@@ -139,6 +141,20 @@ const fetchAllScreeningRooms = async () => {
     screeningRooms.value = res.data;
   } catch (error) {
     console.error('获取放映厅失败:', error);
+  }
+};
+const deleteScreening = async (screeningId) => {
+  if (!confirm('确定要删除该场次吗？')) return;
+  try {
+    const token = localStorage.getItem('token');
+    await axios.delete(`http://localhost:9000/api/screenings/${screeningId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    alert('场次删除成功');
+    fetchAllScreenings(); // 刷新列表
+  } catch (error) {
+    console.error('删除失败:', error);
+    alert('删除失败，请重试');
   }
 };
 

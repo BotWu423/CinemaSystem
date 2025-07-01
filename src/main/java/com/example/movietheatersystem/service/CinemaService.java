@@ -26,7 +26,7 @@ public class CinemaService {
     public List<Cinema> getCinemasByMovieId(Long movieId) {
         return cinemaRepository.findAllByIdInAndHasFutureScreenings(movieId);
     }
-    public Optional<Cinema> getCinemaById(Long id) {
+    public Optional<Cinema> getCinemaById1(Long id) {
         return cinemaRepository.findById(id);
     }
 
@@ -40,5 +40,7 @@ public class CinemaService {
         return cinemaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("影院不存在，ID: " + id));
     }
-
+    public void deleteCinema(Long id) {
+        cinemaRepository.deleteById(id);
+    }
 }

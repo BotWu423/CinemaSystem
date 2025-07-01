@@ -65,4 +65,8 @@ public class SeatService {
     public List<Seat> saveAllSeats(List<Seat> seats) {
         return seatRepository.saveAll(seats);
     }
+    @Transactional
+    public void deleteSeatsByScreeningRoomId(Long roomId) {
+        seatRepository.deleteByScreeningRoomId(roomId);
+    }
 }
