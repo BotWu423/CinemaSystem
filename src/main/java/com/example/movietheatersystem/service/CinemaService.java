@@ -26,7 +26,7 @@ public class CinemaService {
     public List<Cinema> getCinemasByMovieId(Long movieId) {
         return cinemaRepository.findAllByIdInAndHasFutureScreenings(movieId);
     }
-    public Optional<Cinema> getCinemaById(Long id) {
+    public Optional<Cinema> getCinemaById1(Long id) {
         return cinemaRepository.findById(id);
     }
 

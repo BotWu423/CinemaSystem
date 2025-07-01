@@ -3,9 +3,14 @@
     <!-- 添加放映室 -->
     <form @submit.prevent="addRoom" class="add-form">
       <h3>添加新放映室</h3>
-      <label>所属影院ID：
-        <input v-model.number="newRoom.cinemaId" type="number" required />
+      <label>所属影院：
+        <select v-model.number="newRoom.cinemaId" required>
+          <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema.id">
+            {{ cinema.name }}
+          </option>
+        </select>
       </label>
+
       <label>名称：
         <input v-model="newRoom.name" required />
       </label>

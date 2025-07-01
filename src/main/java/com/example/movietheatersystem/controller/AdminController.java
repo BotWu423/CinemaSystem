@@ -70,7 +70,7 @@ public class AdminController {
     // 添加放映室
     @PostMapping("/rooms")
     public ResponseEntity<ScreeningRoom> addScreeningRoom(@RequestBody AddScreeningRoomRequest request) {
-        Cinema cinema = cinemaService.getCinemaById(request.getCinemaId())
+        Cinema cinema = cinemaService.getCinemaById1(request.getCinemaId())
                 .orElseThrow(() -> new RuntimeException("影院不存在"));
 
         ScreeningRoom room = new ScreeningRoom();
