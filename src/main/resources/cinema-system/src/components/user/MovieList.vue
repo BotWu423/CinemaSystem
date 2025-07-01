@@ -3,6 +3,7 @@
     <div class="top-buttons">
       <button @click="goToActivity">近期活动</button>
       <button @click="goToProfile" style="margin-left: 10px;">个人中心</button>
+      <button v-if="isAdmin" @click="goToWorkLog" style="margin-left: 10px; background-color: #f5a623;">每日工作记录</button>
       <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto; background-color: #369d6b;">添加新电影</button>
     </div>
     <h1>电影列表</h1>
@@ -100,6 +101,9 @@ export default {
     },
     goToAddMovie() {
       this.router.push({ path: '/movie-management/add' });
+    },
+    goToWorkLog() {
+      this.router.push({ path: '/work-log' });
     }
   }
 };

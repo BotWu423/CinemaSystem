@@ -2,7 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../components/auth/LoginPage.vue'
 import OrderSuccess from "@/components/user/OrderSuccess.vue";
-
+import WorkLog from '@/components/user/WorkLog.vue'
 
 const routes = [
     {
@@ -33,6 +33,11 @@ const routes = [
         path: '/seats',
         name: 'SeatSelection',
         component: () => import('../components/user/SeatSelection.vue')
+    },
+    {
+        path: '/work-log',
+        name: 'WorkLog',
+        component: WorkLog
     },
     {
         path: '/order-success/:orderId',
