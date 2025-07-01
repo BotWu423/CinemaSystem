@@ -1,5 +1,6 @@
 package com.example.movietheatersystem.service;
 
+import com.example.movietheatersystem.dto.FeaturedMovieDTO;
 import com.example.movietheatersystem.entity.Movie;
 import com.example.movietheatersystem.repository.MovieRepository;
 import jakarta.transaction.Transactional;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -28,5 +30,13 @@ public class MovieService {
         }
         return movieRepository.save(movie);
     }
-
+    // 新增方法：获取轮播电影列表
+    public List<FeaturedMovieDTO> getFeaturedMovies() {
+        return movieRepository.findAll().stream()
+                .map(movie -> new FeaturedMovieDTO(
+                        movie.getId(),
+                        movie.getTitle(),
+                        movie.getPosterUrl()))
+                .collect(Collectors.toList());
+    }
 }

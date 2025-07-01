@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class   SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
                         .requestMatchers("/user/**", "/api/cinemas/**", "/api/screenings/**", "/api/seats/**","/api/orders/**").hasAnyRole("ADMIN", "NORMAL")
-                        .requestMatchers("/api/orders","/api/comments/**","/api/activities/**").hasAnyRole("ADMIN", "NORMAL")
+                        .requestMatchers("/api/orders","/api/comments/**","/api/activities/**","/api/movies/**").hasAnyRole("ADMIN", "NORMAL")
 
                         .anyRequest().authenticated()
                 )

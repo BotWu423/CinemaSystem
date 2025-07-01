@@ -6,6 +6,11 @@
       <button v-if="isAdmin" @click="goToWorkLog" style="margin-left: 10px; background-color: #f5a623;">每日工作记录</button>
       <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto; background-color: #369d6b;">添加新电影</button>
     </div>
+    <!-- 轮播图 -->
+    <div class="carousel-wrapper">
+      <MovieCarousel />
+    </div>
+
     <h1>电影列表</h1>
     <div v-if="loading">加载中...</div>
     <ul v-else>
@@ -32,8 +37,12 @@
 <script>
 import axios from 'axios';
 import { useRouter } from 'vue-router'; // 引入 Vue Router
+import MovieCarousel from "@/components/common/MovieCarousel.vue";
 
 export default {
+  components: {
+    MovieCarousel
+  },
   setup() {
     const router = useRouter(); // 获取路由实例
 
@@ -110,6 +119,9 @@ export default {
 </script>
 
 <style scoped>
+.carousel-wrapper {
+  margin-bottom: 30px;
+}
 .movie-list {
   padding: 20px;
 }
