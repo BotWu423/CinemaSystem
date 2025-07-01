@@ -31,4 +31,9 @@ public class CinemaService {
     public Cinema addCinema(Cinema cinema) {
         return cinemaRepository.save(cinema);
     }
+    public Cinema getCinemaById(Long id) {
+        return cinemaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("影院不存在，ID: " + id));
+    }
+
 }

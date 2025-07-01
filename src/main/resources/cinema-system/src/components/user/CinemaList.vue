@@ -69,6 +69,7 @@ export default {
         this.loading = false;
       }
     },
+
     gotoScreeningList(cinemaId, cinemaName) {
       const movieId = this.$route.query.movieId;
       this.$router.push({
@@ -78,7 +79,14 @@ export default {
     },
     goToAdminCinemaManagement() {
       this.$router.push({ path: '/admin/cinemas-management' });
+    },
+    gotoCinemas(cinemaId) {
+      this.$router.push({
+        path: '/cinema-detail',
+        query: { cinemaId: cinemaId }
+      });
     }
+
   }
 };
 </script>
@@ -92,5 +100,9 @@ export default {
   margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
+}
+.info button {
+  width: 100%; /* 按钮宽度填满父容器 */
+  margin-top: 10px;
 }
 </style>

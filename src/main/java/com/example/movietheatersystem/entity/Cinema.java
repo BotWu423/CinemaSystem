@@ -17,6 +17,9 @@ public class Cinema {
     private String address;
     private String description;
     private String contact;
+    @Column(name = "poster_url")
+    private String posterUrl; // 影院海报图 URL
+
 
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

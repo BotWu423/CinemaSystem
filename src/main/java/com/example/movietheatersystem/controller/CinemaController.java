@@ -25,4 +25,16 @@ public class CinemaController {
         List<Cinema> cinemas = cinemaService.getCinemasByMovieId(movieId);
         return ResponseEntity.ok(cinemas);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Cinema> getCinemaById(@PathVariable Long id) {
+        Cinema cinema = cinemaService.getCinemaById(id);
+        return ResponseEntity.ok(cinema);
+    }
+
+    @GetMapping("/cinema-detail")
+    public ResponseEntity<Cinema> getCinemaDetail(@RequestParam Long cinemaId) {
+        Cinema cinema = cinemaService.getCinemaById(cinemaId);
+        return ResponseEntity.ok(cinema);
+    }
+
 }
