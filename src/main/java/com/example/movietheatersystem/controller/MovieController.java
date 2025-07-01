@@ -1,5 +1,6 @@
 package com.example.movietheatersystem.controller;
 
+import com.example.movietheatersystem.dto.FeaturedMovieDTO;
 import com.example.movietheatersystem.entity.Movie;
 import com.example.movietheatersystem.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,10 @@ public class MovieController {
     @GetMapping("/{id}")
     public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
         return ResponseEntity.ok(movieService.getMovieById(id));
+    }
+    // 新增接口：获取轮播电影列表
+    @GetMapping("/featured")
+    public ResponseEntity<List<FeaturedMovieDTO>> getFeaturedMovies() {
+        return ResponseEntity.ok(movieService.getFeaturedMovies());
     }
 }
