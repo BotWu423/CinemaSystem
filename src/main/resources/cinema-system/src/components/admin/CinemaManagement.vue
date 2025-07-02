@@ -21,12 +21,14 @@
           <th>名称</th>
           <th>地址</th>
           <th>联系方式</th>
+          <th>操作</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="cinema in cinemas" :key="cinema.id">
           <td>{{ cinema.name }}</td>
           <td>{{ cinema.address }}</td>
+          <td>{{ cinema.contact }}</td>
           <td><button @click="deleteCinema(cinema.id)">删除</button></td>
         </tr>
         </tbody>

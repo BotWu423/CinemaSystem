@@ -7,7 +7,6 @@
       <li v-for="showtime in showtimes" :key="showtime.id" class="showtime-item">
         <h4>放映厅: {{ showtime.screeningRoom.name }}</h4>
         <p>开始时间: {{ formatTime(showtime.startTime) }}</p>
-        <p>结束时间: {{ formatTime(showtime.endTime) }}</p>
         <p>票价: ¥{{ showtime.price }}</p>
         <button @click="bookSeats(showtime.id, showtime.screeningRoom.id)">选座购票</button>
       </li>
