@@ -1,7 +1,8 @@
 <template>
   <div class="movie-list">
     <div class="top-buttons">
-      <button @click="goToActivity">近期活动</button>
+      <button @click="goToMovieRanking">电影榜单</button>
+      <button @click="goToActivity" style="margin-left: 10px;">近期活动</button>
       <button @click="goToProfile" style="margin-left: 10px;">个人中心</button>
       <button v-if="isAdmin" @click="goToUserManagement" style="margin-left: 10px; background-color: #e67e22;">用户管理</button>
       <button v-if="isAdmin" @click="goToOrderManagement" style="margin-left: 10px; background-color: #e67e22;">订单管理</button>
@@ -159,6 +160,9 @@ export default {
         path: '/cinema-detail',
         query: { cinemaId: cinemaId }
       });
+    },
+    goToMovieRanking() {
+      this.router.push({ path: '/movie-ranking' });
     },
   }
 };

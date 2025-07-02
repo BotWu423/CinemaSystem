@@ -4,6 +4,7 @@ import LoginView from '../components/auth/LoginPage.vue'
 import OrderSuccess from "@/components/user/OrderSuccess.vue";
 import WorkLog from '@/components/user/WorkLog.vue'
 import OrderManagement from '@/components/admin/OrderManagement.vue';
+import MovieRanking from '@/components/user/MovieRanking.vue';
 
 const routes = [
     {
@@ -104,6 +105,10 @@ const routes = [
         path: '/cinema-detail',
         name: 'CinemaDetail',
         component: () => import('../components/user/CinemaDetail.vue')
+    },
+    {
+        path: '/movie-ranking',
+        component: MovieRanking
     }
 ]
 

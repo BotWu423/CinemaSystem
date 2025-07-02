@@ -1,8 +1,12 @@
 <template>
   <div class="cinema-list">
     <h1>电影院列表</h1>
-    <div v-if="isAdmin" class="admin-actions">
-      <button @click="goToAdminCinemaManagement">管理电影院</button>
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+      <button @click="goToMovieRanking">电影榜单</button>
+      <button @click="goToActivity">近期活动</button>
+      <div v-if="isAdmin" class="admin-actions">
+        <button @click="goToAdminCinemaManagement">管理电影院</button>
+      </div>
     </div>
     <div v-if="loading">加载中...</div>
     <ul v-else>
@@ -85,8 +89,13 @@ export default {
         path: '/cinema-detail',
         query: { cinemaId: cinemaId }
       });
+    },
+    goToMovieRanking() {
+      this.$router.push({ path: '/movie-ranking' });
+    },
+    goToActivity() {
+      this.$router.push({ path: '/activity' });
     }
-
   }
 };
 </script>

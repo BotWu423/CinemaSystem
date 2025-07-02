@@ -4,6 +4,7 @@ import com.example.movietheatersystem.entity.Order;
 import com.example.movietheatersystem.entity.OrderDetail;
 import com.example.movietheatersystem.entity.Screening;
 import com.example.movietheatersystem.entity.Seat;
+import com.example.movietheatersystem.entity.Movie;
 import com.example.movietheatersystem.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class OrderService {
 
     @Autowired
     private OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
 
     public Order createOrder(Long userId, Long screeningId, List<Long> seatIds, BigDecimal totalPrice) {
         // 检查座位是否可用
@@ -62,6 +66,17 @@ public class OrderService {
         }
 
         order.setDetails(details);
+
+        // 更新电影热度和票房
+        Movie movie = order.getScreening().getMovie();
+        if (movie != null) {
+            int addPopularity = seatIds.size() * 10;
+            BigDecimal addBoxOffice = totalPrice;
+            movie.setPopularity(movie.getPopularity() + addPopularity);
+            movie.setBoxOffice(movie.getBoxOffice().add(addBoxOffice));
+            movieRepository.save(movie);
+        }
+
         return orderRepository.save(order);
     }
 

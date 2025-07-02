@@ -6,18 +6,22 @@
   <div class="cinema-detail">
     <h1>{{ cinema.name }}</h1>
 
-    <div class="cinema-info">
+    <div class="cinema-info" style="align-items: flex-start;">
       <div class="poster-section">
         <img :src="cinema.posterUrl || 'https://img.picui.cn/free/2025/07/01/686387241876a.jpg'"
              alt="影院海报"
              class="cinema-poster">
       </div>
 
-      <div class="basic-info">
+      <div class="basic-info" style="flex: 1 1 0; min-width: 0; margin-right: 20px;">
         <h2>基本信息</h2>
         <p><strong>地址:</strong> {{ cinema.address }}</p>
         <p><strong>联系方式:</strong> {{ cinema.contact }}</p>
         <p><strong>简介:</strong> {{ cinema.description }}</p>
+      </div>
+      <div class="chart-section" style="display: flex; flex-direction: row; gap: 10px;">
+        <div ref="barRef" style="width: 400px; height: 300px;"></div>
+        <div ref="pieRef" style="width: 400px; height: 300px;"></div>
       </div>
     </div>
 

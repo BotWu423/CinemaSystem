@@ -20,6 +20,8 @@ public class Movie {
     private LocalDate releaseDate;
     private String description;
     private String posterUrl;
+    private int popularity = 0;
+    private BigDecimal boxOffice = BigDecimal.ZERO;
 
     public Movie() {
 
@@ -103,6 +105,22 @@ public class Movie {
 
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public BigDecimal getBoxOffice() {
+        return boxOffice;
+    }
+
+    public void setBoxOffice(BigDecimal boxOffice) {
+        this.boxOffice = boxOffice;
     }
     // Getters and Setters
 }
