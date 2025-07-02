@@ -90,6 +90,13 @@ export default {
         tooltip: {
           trigger: 'axis'
         },
+        grid: {
+          left: '7%',
+          right: '7%',
+          bottom: '20%', // 增加底部间距
+          top: '10%',
+          containLabel: true
+        },
         xAxis: {
           type: 'category',
           data: this.movies.map(m => m.title),
@@ -119,7 +126,8 @@ export default {
             show: true, // 显示滑动条，默认不显示
             xAxisIndex: [0], // 应用于x轴
             start: 0, // 默认显示区域起点百分比
-            end: 50 // 默认显示区域终点百分比
+            end: 50, // 默认显示区域终点百分比
+            height: 30 // 设置滑动条的高度
           },
           {
             type: 'inside', // 支持鼠标滚轮和触控板缩放和平移
