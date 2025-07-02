@@ -43,7 +43,7 @@
           <div class="cinema-info">
             <h4>{{ cinema.name }}</h4>
             <p>地址: {{ cinema.address }}</p>
-            <button @click="goToCinemas(cinema.id)">查看场次</button>
+            <button @click="goToCinemaDetail(cinema.id)">查看详情</button>
           </div>
         </li>
       </ul>
@@ -153,7 +153,13 @@ export default {
     },
     goToOrderManagement() {
       this.router.push({ path: '/order-management' });
-    }
+    },
+    goToCinemaDetail(cinemaId) {
+      this.router.push({
+        path: '/cinema-detail',
+        query: { cinemaId: cinemaId }
+      });
+    },
   }
 };
 </script>

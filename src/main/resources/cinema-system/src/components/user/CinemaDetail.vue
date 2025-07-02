@@ -47,6 +47,22 @@
         </ul>
       </div>
     </div>
+    <div class="comment-section">
+      <h2>评价区</h2>
+      <div v-if="comments.length === 0">暂无评论</div>
+      <ul>
+        <li v-for="comment in comments" :key="comment.id" class="comment-item">
+          <span class="comment-user">{{ comment.user.username }}</span>：
+          <span class="comment-content">{{ comment.content }}</span>
+          <span class="comment-time">{{ formatTime(comment.createTime) }}</span>
+          <button v-if="canDelete(comment)" @click="deleteComment(comment.id)">删除</button>
+        </li>
+      </ul>
+      <div class="add-comment">
+        <textarea v-model="newComment" placeholder="写下你的评价..." rows="2"></textarea>
+        <button @click="submitComment" :disabled="!newComment.trim()">发表评论</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>import axios from 'axios';
@@ -62,12 +78,19 @@ export default {
       },
       movies: [],
       loading: true,
-      error: null
+      error: null,
+      // 新增评论相关数据
+      comments: [],
+      newComment: '',
+      currentUser: null,
+      isAdmin: false
     };
   },
   created() {
     this.fetchCinemaDetails();
     this.fetchCurrentMovies();
+    this.getCurrentUser();
+    this.fetchComments();
   },
   methods: {
     async fetchCinemaDetails() {
@@ -118,7 +141,67 @@ export default {
           cinemaName: this.cinema.name
         }
       });
-    }
+    },
+    async fetchComments() {
+      try {
+        const cinemaId = this.$route.query.cinemaId;
+        const token = localStorage.getItem('token');
+        const headers = token ? { Authorization: 'Bearer ' + token } : {};
+        const response = await axios.get(`http://localhost:9000/api/cinema-comments/cinema/${cinemaId}`, { headers });
+        this.comments = response.data;
+      } catch (e) {
+        this.comments = [];
+      }
+    },
+
+    async submitComment() {
+      if (!this.newComment.trim()) return;
+      const token = localStorage.getItem('token');
+      const cinemaId = this.$route.query.cinemaId;
+
+      try {
+        await axios.post('http://localhost:9000/api/cinema-comments', {
+          cinemaId,
+          content: this.newComment
+        }, {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+        this.newComment = '';
+        this.fetchComments();
+      } catch (e) {
+        alert('发表评论失败');
+      }
+    },
+
+    async deleteComment(commentId) {
+      const token = localStorage.getItem('token');
+      try {
+        await axios.delete(`http://localhost:9000/api/cinema-comments/${commentId}`, {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+        this.fetchComments();
+      } catch (e) {
+        alert('删除失败');
+      }
+    },
+
+    formatTime(time) {
+      if (!time) return '';
+      return new Date(time.replace('T', ' ')).toLocaleString();
+    },
+
+    canDelete(comment) {
+      if (!this.currentUser) return false;
+      return this.isAdmin || comment.user.id === this.currentUser.id;
+    },
+
+    getCurrentUser() {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      this.currentUser = { id: payload.id, username: payload.sub };
+      this.isAdmin = payload.roles && payload.roles.includes('ADMIN');
+    },
   }
 };
 </script>
@@ -180,5 +263,48 @@ export default {
 
 .movie-details {
   flex: 1;
+}
+.comment-section {
+  margin-top: 40px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+.comment-item {
+  margin-bottom: 10px;
+}
+.comment-user {
+  font-weight: bold;
+  margin-right: 8px;
+}
+.comment-content {
+  margin-right: 8px;
+}
+.comment-time {
+  color: #888;
+  font-size: 12px;
+  margin-left: 8px;
+}
+.add-comment {
+  margin-top: 16px;
+}
+.add-comment textarea {
+  width: 100%;
+  resize: vertical;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+.add-comment button {
+  margin-top: 8px;
+  padding: 6px 16px;
+  background: #42b983;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.add-comment button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 </style>
