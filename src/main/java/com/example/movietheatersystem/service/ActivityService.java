@@ -95,5 +95,9 @@ public class ActivityService {
         activity.getParticipants().remove(user);
         activityRepository.save(activity);
     }
-
+    @Transactional
+    public void deleteByCinemaId(Long CinemaId)
+    {
+        activityRepository.deleteByCinemaId(CinemaId);
+    }
 }
