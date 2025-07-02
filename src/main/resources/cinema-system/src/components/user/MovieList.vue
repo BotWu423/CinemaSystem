@@ -17,7 +17,7 @@
     <div v-if="loading">加载中...</div>
     <ul v-else>
       <li v-for="movie in movies" :key="movie.id" class="movie-item">
-        <img :src="require('@/assets/image/default-poster.jpg')" alt="海报" width="100"/>
+        <img :src="movie.posterUrl || require('@/assets/image/default-poster.jpg')" alt="海报" width="150" />
         <div class="info">
           <h3>{{ movie.title }}</h3>
           <p>导演: {{ movie.director }}</p>
