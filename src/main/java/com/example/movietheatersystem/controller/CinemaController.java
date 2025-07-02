@@ -55,4 +55,9 @@ public class CinemaController {
         cinemaService.deleteCinema(cinemaId);
         return ResponseEntity.ok("影院及其数据已成功删除");
     }
+    @PutMapping
+    public ResponseEntity<Cinema> updateCinema(@RequestBody Cinema cinema) {
+        return ResponseEntity.ok(cinemaService.updateCinema(cinema));
+    }
+
 }

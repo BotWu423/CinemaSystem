@@ -4,6 +4,7 @@ import com.example.movietheatersystem.entity.Cinema;
 import com.example.movietheatersystem.repository.CinemaRepository;
 import com.example.movietheatersystem.repository.ScreeningRepository;
 import com.example.movietheatersystem.repository.ScreeningRoomRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +44,17 @@ public class CinemaService {
     public void deleteCinema(Long id) {
         cinemaRepository.deleteById(id);
     }
+    @Transactional
+    public Cinema updateCinema(Cinema cinema) {
+        if (cinema == null || cinema.getId() == null) {
+            throw new IllegalArgumentException("影院ID不能为空");
+        }
+
+        if (cinema.getName() == null || cinema.getName().isEmpty()) {
+            throw new IllegalArgumentException("影院名称不能为空");
+        }
+
+        return cinemaRepository.save(cinema);
+    }
+
 }

@@ -30,6 +30,8 @@
           <!-- 添加跳转按钮 -->
           <button @click="goToCinemas(movie.id)">选择影院</button>
           <button @click="goToMovieDetail(movie.id)" style="margin-left: 10px;">查看详情</button>
+          <button v-if="isAdmin" @click="deleteMovie(movie.id)" style="margin-left: 10px; background-color: #e74c3c;">删除电影</button>
+          <button v-if="isAdmin" @click="goToEditMovie(movie.id)" style="margin-left: 10px; background-color: #f39c12;">编辑电影</button>
         </div>
       </li>
     </ul>
@@ -128,6 +130,24 @@ export default {
         this.loadingCinemas = false;
       }
     },
+    async deleteMovie(movieId) {
+      const confirmDelete = confirm("确定要删除这部电影及其所有关联数据吗？");
+      if (!confirmDelete) return;
+
+      try {
+        const token = localStorage.getItem('token');
+        await axios.delete(`http://localhost:9000/api/movies/${movieId}`, {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+        alert("删除成功！");
+        this.fetchMovies(); // 刷新电影列表
+      } catch (error) {
+        console.error('删除失败:', error);
+        alert("删除失败，请查看控制台日志。");
+      }
+    },
     goToCinemas(movieId) {
       // 跳转到 /cinemas 页面，并携带 movieId 参数
       this.router.push({ path: '/cinemas', query: { movieId: movieId } });
@@ -160,6 +180,12 @@ export default {
         query: { cinemaId: cinemaId }
       });
     },
+    goToEditMovie(movieId) {
+      this.router.push({
+        path: '/movie-management/edit',
+        query: { movieId: movieId }
+      });
+    }
   }
 };
 </script>

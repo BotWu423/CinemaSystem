@@ -43,4 +43,20 @@ public class MovieService {
                         movie.getPosterUrl()))
                 .collect(Collectors.toList());
     }
+    public void deleteMovieById(Long id) {
+        movieRepository.deleteById(id);
+    }
+    @Transactional
+    public Movie updateMovie(Movie movie) {
+        if (movie == null || movie.getId() == null) {
+            throw new IllegalArgumentException("电影ID不能为空");
+        }
+
+        if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
+            throw new IllegalArgumentException("电影标题不能为空");
+        }
+
+        return movieRepository.save(movie);
+    }
+
 }
