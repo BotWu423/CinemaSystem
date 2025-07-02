@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -43,5 +44,24 @@ public class UserService {
 
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public void resetPassword(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("用户不存在"));
+        user.setPassword(com.example.movietheatersystem.tool.BCryptUtil.encryptPassword("123456"));
+        userRepository.save(user);
+    }
+
+    public void changeUserRole(Long userId, String role) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("用户不存在"));
+        if (!"ADMIN".equals(role) && !"NORMAL".equals(role)) {
+            throw new RuntimeException("无效的角色类型");
+        }
+        user.setRole(User.Role.valueOf(role));
+        userRepository.save(user);
     }
 }

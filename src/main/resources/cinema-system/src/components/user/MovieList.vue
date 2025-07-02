@@ -3,6 +3,7 @@
     <div class="top-buttons">
       <button @click="goToActivity">近期活动</button>
       <button @click="goToProfile" style="margin-left: 10px;">个人中心</button>
+      <button v-if="isAdmin" @click="goToUserManagement" style="margin-left: 10px; background-color: #e67e22;">用户管理</button>
       <button v-if="isAdmin" @click="goToOrderManagement" style="margin-left: 10px; background-color: #e67e22;">订单管理</button>
       <button v-if="isAdmin" @click="goToWorkLog" style="margin-left: 10px; background-color: #f5a623;">每日工作记录</button>
       <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto; background-color: #369d6b;">添加新电影</button>
@@ -16,7 +17,7 @@
     <div v-if="loading">加载中...</div>
     <ul v-else>
       <li v-for="movie in movies" :key="movie.id" class="movie-item">
-        <img :src="require('@/assets/image/default-poster.jpg')" alt="海报" width="100" />
+        <img :src="require('@/assets/image/default-poster.jpg')" alt="海报" width="100"/>
         <div class="info">
           <h3>{{ movie.title }}</h3>
           <p>导演: {{ movie.director }}</p>
@@ -140,6 +141,9 @@ export default {
     },
     goToProfile() {
       this.router.push({ path: '/profile' });
+    },
+    goToUserManagement() {
+      this.router.push({ path: '/user-management' });
     },
     goToAddMovie() {
       this.router.push({ path: '/movie-management/add' });

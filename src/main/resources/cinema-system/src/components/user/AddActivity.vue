@@ -5,6 +5,10 @@
       <input v-model="activity.name" placeholder="活动名称" />
       <input v-model="activity.quota" type="number" min="1" placeholder="名额" />
       <textarea v-model="activity.description" placeholder="活动描述"></textarea>
+      <select v-model="activity.cinemaId">
+        <option disabled value="">请选择所属影院</option>
+        <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema.id">{{ cinema.name }}</option>
+      </select>
       <div class="button-container">
         <button @click="submitActivity" :disabled="!activity.name || !activity.quota">提交</button>
         <button @click="$router.back()" style="margin-left:10px;">取消</button>
@@ -19,10 +23,20 @@ export default {
   name: 'AddActivity',
   data() {
     return {
-      activity: {name: '', description: '', quota: 1}
+      activity: {name: '', description: '', quota: 1, cinemaId: ''},
+      cinemas: []
     };
   },
+  mounted() {
+    this.fetchCinemas();
+  },
   methods: {
+    async fetchCinemas() {
+      const token = localStorage.getItem('token');
+      const headers = token ? { Authorization: 'Bearer ' + token } : {};
+      const res = await axios.get('http://localhost:9000/api/cinemas/all', { headers });
+      this.cinemas = res.data;
+    },
     async submitActivity() {
       const token = localStorage.getItem('token');
       const headers = token ? {Authorization: 'Bearer ' + token} : {};

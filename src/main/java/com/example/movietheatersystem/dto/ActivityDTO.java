@@ -8,6 +8,8 @@ public class ActivityDTO {
     private String description;
     private Integer quota;
     private List<Long> participants;
+    private Long cinemaId;
+    private String cinemaName;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -20,4 +22,8 @@ public class ActivityDTO {
     public void setQuota(Integer quota) { this.quota = quota; }
     public List<Long> getParticipants() { return participants; }
     public void setParticipants(List<Long> participants) { this.participants = participants; }
+    public Long getCinemaId() { return cinemaId; }
+    public void setCinemaId(Long cinemaId) { this.cinemaId = cinemaId; }
+    public String getCinemaName() { return cinemaName; }
+    public void setCinemaName(String cinemaName) { this.cinemaName = cinemaName; }
 }

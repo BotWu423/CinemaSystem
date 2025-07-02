@@ -54,4 +54,30 @@ public class UserController {
         result.put("phone", user.getPhone());
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @PostMapping("/{userId}/reset-password")
+    public ResponseEntity<?> resetPassword(@PathVariable Long userId) {
+        try {
+            userService.resetPassword(userId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{userId}/change-role")
+    public ResponseEntity<?> changeUserRole(@PathVariable Long userId, @RequestBody Map<String, String> body) {
+        String role = body.get("role");
+        try {
+            userService.changeUserRole(userId, role);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

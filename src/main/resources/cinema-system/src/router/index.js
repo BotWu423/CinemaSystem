@@ -21,6 +21,11 @@ const routes = [
         component: () => import('../components/user/MovieList.vue')
     },
     {
+        path: '/user-management',
+        name: 'UserManagement',
+        component: () => import('../components/admin/UserManagement.vue')
+    },
+    {
         path: '/cinemas',
         name: 'CinemaList',
         component: () => import('../components/user/CinemaList.vue')
