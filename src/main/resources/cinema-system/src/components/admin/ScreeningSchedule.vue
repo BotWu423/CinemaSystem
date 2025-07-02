@@ -55,7 +55,10 @@
         <td>{{ item.screeningRoom.name }}</td>
         <td>{{ formatTime(item.startTime) }}</td>
         <td>¥{{ item.price }}</td>
-        <td><button @click="deleteScreening(item.id)">删除</button></td>
+        <td>
+          <button @click="editScreening(item.id)">编辑</button>
+          <button @click="deleteScreening(item.id)" style="margin-left: 10px;">删除</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -64,6 +67,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import router from "@/router";
 
 const newScreening = ref({
   movieId: null,
@@ -127,6 +131,12 @@ const fetchAllMovies = async () => {
   } catch (error) {
     console.error('获取电影失败:', error);
   }
+};
+const editScreening = (screeningId) => {
+  router.push({
+    path: '/admin/screening/edit',
+    query: { screeningId }
+  });
 };
 
 // 获取所有放映厅

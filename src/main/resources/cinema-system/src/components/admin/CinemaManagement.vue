@@ -29,7 +29,10 @@
           <td>{{ cinema.name }}</td>
           <td>{{ cinema.address }}</td>
           <td>{{ cinema.contact }}</td>
-          <td><button @click="deleteCinema(cinema.id)">删除</button></td>
+          <td>
+            <button @click="editCinema(cinema.id)">编辑</button>
+            <button @click="deleteCinema(cinema.id)" style="margin-left: 10px;">删除</button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -61,6 +64,12 @@ export default {
     this.fetchCinemas();
   },
   methods: {
+    editCinema(cinemaId) {
+      this.$router.push({
+        path: '/admin/cinema/edit',
+        query: { cinemaId: cinemaId }
+      });
+    },
     async fetchCinemas() {
       const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:9000/api/cinemas/all', {

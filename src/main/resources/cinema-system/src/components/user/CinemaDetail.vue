@@ -3,6 +3,61 @@
 </script>
 
 <template>
+  <!-- 查看员工按钮 -->
+  <button @click="fetchEmployees" class="view-employees-btn">查看员工</button>
+  <!-- 新增员工按钮（仅当已显示员工列表时出现） -->
+  <div v-if="showEmployees && isAdmin">
+    <button @click="addEmployeeForm" class="add-employee-btn">新增员工</button>
+  </div>
+
+  <!-- 新增员工表单 -->
+  <div v-if="isAddingEmployee" class="add-employee-form">
+    <h3>新增员工</h3>
+    <form @submit.prevent="addEmployee">
+      <div>
+        <label>姓名:</label>
+        <input type="text" v-model="newEmployee.name" required />
+      </div>
+      <div>
+        <label>电话:</label>
+        <input type="text" v-model="newEmployee.phone" />
+      </div>
+      <button type="submit">提交</button>
+      <button @click="isAddingEmployee = false" type="button">取消</button>
+    </form>
+  </div>
+  <!-- 修改员工表单 -->
+  <div v-if="isEditingEmployee" class="edit-employee-form">
+    <h3>修改员工信息</h3>
+    <form @submit.prevent="updateEmployee">
+      <div>
+        <label>姓名:</label>
+        <input type="text" v-model="editingEmployee.name" required />
+      </div>
+      <div>
+        <label>电话:</label>
+        <input type="text" v-model="editingEmployee.phone" />
+      </div>
+      <button type="submit">保存</button>
+      <button @click="isEditingEmployee = false" type="button">取消</button>
+    </form>
+  </div>
+
+  <!-- 员工列表 -->
+  <div v-if="showEmployees" class="employee-list">
+    <h3>影院员工</h3>
+    <div v-if="employees.length === 0">暂无员工信息</div>
+    <!-- CinemaDetail.vue -->
+    <ul v-else>
+      <li v-for="employee in employees" :key="employee.id" class="employee-item">
+        <p><strong>姓名:</strong> {{ employee.name }}</p>
+        <p><strong>电话:</strong> {{ employee.phone }}</p>
+        <button v-if="isAdmin" @click="deleteEmployee(employee.id)" class="delete-employee-btn">删除</button>
+        <button v-if="isAdmin" @click="editEmployee(employee)" class="edit-employee-btn">修改</button>
+      </li>
+    </ul>
+  </div>
+
   <div class="cinema-detail">
     <h1>{{ cinema.name }}</h1>
 
@@ -87,7 +142,18 @@ export default {
       comments: [],
       newComment: '',
       currentUser: null,
-      isAdmin: false
+      isAdmin: false,
+      // 新增员工相关数据
+      employees: [],
+      showEmployees: false,
+      newEmployee: {
+        name: '',
+        phone: ''
+      },
+      isAddingEmployee: false, // 控制是否显示新增表单
+      // 编辑员工相关
+      isEditingEmployee: false,
+      editingEmployee: null, // 当前正在编辑的员工对象
     };
   },
   created() {
@@ -97,6 +163,104 @@ export default {
     this.fetchComments();
   },
   methods: {
+    editEmployee(employee) {
+      this.editingEmployee = { ...employee }; // 拷贝一份用于编辑
+      this.isEditingEmployee = true;
+    },
+    async updateEmployee() {
+      const token = localStorage.getItem('token');
+
+      try {
+        await axios.put(
+            `http://localhost:9000/api/employees/${this.editingEmployee.id}`,
+            this.editingEmployee,
+            {
+              headers: {
+                Authorization: 'Bearer ' + token
+              }
+            }
+        );
+        this.isEditingEmployee = false;
+        this.fetchEmployees(); // 刷新员工列表
+      } catch (error) {
+        console.error('更新员工失败:', error);
+        alert('更新员工失败');
+      }
+    },
+
+    async deleteEmployee(employeeId) {
+      const token = localStorage.getItem('token');
+
+      if (!confirm('确定要删除该员工吗？')) {
+        return;
+      }
+
+      try {
+        await axios.delete(`http://localhost:9000/api/employees/${employeeId}`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+        this.fetchEmployees(); // 刷新员工列表
+      } catch (error) {
+        console.error('删除员工失败:', error);
+        alert('删除员工失败');
+      }
+    },
+
+    async fetchEmployees() {
+      if (this.showEmployees) {
+        this.showEmployees = false; // 如果已显示，则关闭
+        return;
+      }
+      const cinemaId = this.$route.query.cinemaId;
+      const token = localStorage.getItem('token');
+
+      try {
+        const response = await axios.get(`http://localhost:9000/api/employees/cinema/${cinemaId}`, {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+        this.employees = response.data;
+        this.showEmployees = true;
+      } catch (error) {
+        console.error('获取员工失败:', error);
+        this.employees = [];
+        this.showEmployees = false;
+        alert('无法加载员工信息');
+      }
+    },
+    addEmployeeForm() {
+      this.isAddingEmployee = true;
+    },
+    async addEmployee() {
+      const cinemaId = this.$route.query.cinemaId;
+      const token = localStorage.getItem('token');
+
+      try {
+        await axios.post(
+            'http://localhost:9000/api/employees',
+            {
+              name: this.newEmployee.name,
+              phone: this.newEmployee.phone
+            },
+            {
+              params: { cinemaId },
+              headers: {
+                Authorization: 'Bearer ' + token
+              }
+            }
+        );
+        this.newEmployee.name = '';
+        this.newEmployee.phone = '';
+        this.isAddingEmployee = false;
+        this.fetchEmployees(); // 刷新员工列表
+      } catch (error) {
+        console.error('添加员工失败:', error);
+        alert('添加员工失败');
+      }
+    },
     async fetchCinemaDetails() {
       try {
         const cinemaId = this.$route.query.cinemaId;
@@ -209,7 +373,54 @@ export default {
   }
 };
 </script>
-<style scoped>.cinema-detail {
+<style scoped>
+.delete-employee-btn {
+  margin-top: 5px;
+  padding: 4px 8px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.delete-employee-btn:hover {
+  background-color: #c0392b;
+}
+
+.view-employees-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.view-employees-btn:hover {
+  background-color: #2980b9;
+}
+
+.employee-list {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.employee-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.employee-item:last-child {
+  border-bottom: none;
+}
+
+.cinema-detail {
   padding: 20px;
 }
 
@@ -311,4 +522,52 @@ export default {
   background: #ccc;
   cursor: not-allowed;
 }
+.add-employee-form {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+}
+
+.add-employee-form div {
+  margin-bottom: 10px;
+}
+
+.add-employee-form label {
+  display: inline-block;
+  width: 80px;
+  font-weight: bold;
+}
+
+.add-employee-form input {
+  padding: 6px;
+  width: 200px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.add-employee-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-employee-btn:hover {
+  background-color: #27ae60;
+}
+.edit-employee-btn {
+  margin-top: 5px;
+  padding: 4px 8px;
+  background-color: #e91e63; /* 粉色 */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
 </style>

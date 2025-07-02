@@ -107,6 +107,21 @@ const routes = [
         component: () => import('../components/user/CinemaDetail.vue')
     },
     {
+        path: '/movie-management/edit',
+        name: 'MovieManagement',
+        component: () => import('../components/admin/EditMovie.vue')
+    },
+    {
+        path: '/admin/cinema/edit',
+        name: 'EditCinema',
+        component: () => import('@/components/admin/EditCinema.vue')
+    },
+    {
+        path: '/admin/screening/edit',
+        name: 'EditScreening',
+        component: () => import('@/components/admin/EditScreening.vue')
+    },
+    {
         path: '/movie-ranking',
         component: MovieRanking
     }

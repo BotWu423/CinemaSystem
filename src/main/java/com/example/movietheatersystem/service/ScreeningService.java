@@ -5,6 +5,7 @@ import com.example.movietheatersystem.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.movietheatersystem.dto.UpdateScreeningDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,10 +17,15 @@ import java.util.List;
 public class ScreeningService {
     @Autowired
     private ScreeningRepository screeningRepository;
+    @Autowired
     private SeatRepository seatRepository;
     private OrderRepository orderRepository;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private ScreeningRoomRepository screeningRoomRepository;
+    @Autowired
+    private MovieRepository movieRepository;
 
     public List<Screening> getScreeningsByCinemaAndMovie(Long cinemaId, Long movieId) {
         return screeningRepository.findByScreeningRoom_Cinema_IdAndMovie_Id(cinemaId, movieId);
@@ -95,5 +101,30 @@ public class ScreeningService {
     public List<Screening> findByScreeningRoomId(Long roomId) {
         return screeningRepository.findByScreeningRoomId(roomId);
     }
+    public List<Screening> findByMovieId(Long MovieId) {
+        return screeningRepository.findAllByMovieId(MovieId);
+    }
+    @Transactional
+    public Screening updateScreening(UpdateScreeningDTO dto) {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("场次ID不能为空");
+        }
 
+        Screening screening = screeningRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("场次不存在"));
+
+        Movie movie = movieRepository.findById(dto.getMovieId())
+                .orElseThrow(() -> new RuntimeException("电影不存在"));
+
+        ScreeningRoom room = screeningRoomRepository.findById(dto.getRoomId())
+                .orElseThrow(() -> new RuntimeException("放映厅不存在"));
+
+        // 更新字段
+        screening.setMovie(movie);
+        screening.setScreeningRoom(room);
+        screening.setStartTime(dto.getStartTime());
+        screening.setPrice(dto.getPrice());
+
+        return screeningRepository.save(screening);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.movietheatersystem.controller;
 
+import com.example.movietheatersystem.dto.UpdateScreeningDTO;
 import com.example.movietheatersystem.entity.Order;
 import com.example.movietheatersystem.entity.Screening;
 import com.example.movietheatersystem.entity.ScreeningRoom;
@@ -54,4 +55,9 @@ public class ScreeningController {
             return ResponseEntity.status(500).build();
         }
     }
+    @PutMapping
+    public ResponseEntity<Screening> updateScreening(@RequestBody UpdateScreeningDTO dto) {
+        return ResponseEntity.ok(screeningService.updateScreening(dto));
+    }
+
 }
