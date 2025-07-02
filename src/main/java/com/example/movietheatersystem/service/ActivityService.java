@@ -5,6 +5,8 @@ import com.example.movietheatersystem.entity.Activity;
 import com.example.movietheatersystem.entity.User;
 import com.example.movietheatersystem.repository.ActivityRepository;
 import com.example.movietheatersystem.repository.UserRepository;
+import com.example.movietheatersystem.repository.CinemaRepository;
+import com.example.movietheatersystem.entity.Cinema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ public class ActivityService {
     private ActivityRepository activityRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CinemaRepository cinemaRepository;
 
     public List<ActivityDTO> getAllActivities() {
         return activityRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
@@ -31,6 +35,7 @@ public class ActivityService {
         activity.setName(dto.getName());
         activity.setDescription(dto.getDescription());
         activity.setQuota(dto.getQuota());
+        activity.setCinemaId(dto.getCinemaId());
         activityRepository.save(activity);
     }
 
@@ -60,6 +65,16 @@ public class ActivityService {
         dto.setDescription(activity.getDescription());
         dto.setQuota(activity.getQuota());
         dto.setParticipants(activity.getParticipants().stream().map(User::getId).collect(Collectors.toList()));
+        dto.setCinemaId(activity.getCinemaId());
+        if (activity.getCinemaId() != null) {
+            dto.setCinemaName(
+                cinemaRepository.findById(activity.getCinemaId())
+                    .map(cinema -> cinema.getName())
+                    .orElse("未知影院")
+            );
+        } else {
+            dto.setCinemaName("未知影院");
+        }
         return dto;
     }
     public List<ActivityDTO> getUserActivities(Long userId)

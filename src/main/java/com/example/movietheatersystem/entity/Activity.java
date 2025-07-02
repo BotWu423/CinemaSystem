@@ -14,6 +14,8 @@ public class Activity {
     private String name;
     private String description;
     private Integer quota;
+    private Long cinemaId;
+
 
     @ManyToMany
     @JoinTable(
@@ -26,6 +28,12 @@ public class Activity {
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    public Long getCinemaId() {
+        return cinemaId;
+    }
+    public void setCinemaId(Long cinemaId) {
+        this.cinemaId = cinemaId;
+    }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getDescription() { return description; }
