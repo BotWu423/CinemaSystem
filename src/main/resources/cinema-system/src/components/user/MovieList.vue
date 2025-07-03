@@ -1,13 +1,13 @@
 <template>
   <div class="movie-list">
-    <div class="top-buttons">
+    <div class="top-Buttons">
       <button @click="goToMovieRanking">电影榜单</button>
       <button @click="goToActivity" style="margin-left: 10px;">近期活动</button>
       <button @click="goToProfile" style="margin-left: 10px;">个人中心</button>
-      <button v-if="isAdmin" @click="goToUserManagement" style="margin-left: 10px; background-color: #e67e22;">用户管理</button>
-      <button v-if="isAdmin" @click="goToOrderManagement" style="margin-left: 10px; background-color: #e67e22;">订单管理</button>
-      <button v-if="isAdmin" @click="goToWorkLog" style="margin-left: 10px; background-color: #f5a623;">每日工作记录</button>
-      <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto; background-color: #369d6b;">添加新电影</button>
+      <button v-if="isAdmin" @click="goToUserManagement" style="margin-left: 10px;">用户管理</button>
+      <button v-if="isAdmin" @click="goToOrderManagement" style="margin-left: 10px;">订单管理</button>
+      <button v-if="isAdmin" @click="goToWorkLog" style="margin-left: 10px;">每日工作记录</button>
+      <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto;">添加新电影</button>
     </div>
     <!-- 轮播图 -->
     <div class="carousel-wrapper">
@@ -16,26 +16,44 @@
 
     <h1>电影列表</h1>
     <div v-if="loading">加载中...</div>
-    <ul v-else>
-      <li v-for="movie in movies" :key="movie.id" class="movie-item">
-        <img :src="movie.posterUrl || require('@/assets/image/default-poster.jpg')" alt="海报" width="150" />
-        <div class="info">
-          <h3>{{ movie.title }}</h3>
-          <p>导演: {{ movie.director }}</p>
-          <p>演员: {{ movie.actors }}</p>
-          <p>类型: {{ movie.type }}</p>
-          <p>时长: {{ movie.duration }} 分钟</p>
-          <p>评分: {{ movie.rating ? movie.rating : '暂无' }}</p>
-          <p>上映日期: {{ movie.releaseDate }}</p>
-          <p>简介: {{ movie.description }}</p>
-          <!-- 添加跳转按钮 -->
-          <button @click="goToCinemas(movie.id)">选择影院</button>
-          <button @click="goToMovieDetail(movie.id)" style="margin-left: 10px;">查看详情</button>
-          <button v-if="isAdmin" @click="deleteMovie(movie.id)" style="margin-left: 10px; background-color: #e74c3c;">删除电影</button>
-          <button v-if="isAdmin" @click="goToEditMovie(movie.id)" style="margin-left: 10px; background-color: #f39c12;">编辑电影</button>
-        </div>
-      </li>
-    </ul>
+    <div class="movies-container">
+      <el-row :gutter="20">
+        <el-col
+            v-for="movie in movies"
+            :key="movie.id"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+            :xl="4"
+        >
+          <el-card class="movie-card" shadow="hover">
+            <div @click="goToMovieDetail(movie.id)" style="cursor: pointer;">
+              <img
+                  :src="movie.posterUrl || require('@/assets/image/default-poster.jpg')"
+                  alt="海报"
+                  class="movie-poster"
+              />
+            </div>
+            <div class="movie-info">
+              <h3>{{ movie.title }}</h3>
+              <p><strong>类型:</strong> {{ movie.type }}</p>
+              <p><strong>时长:</strong> {{ movie.duration }} 分钟</p>
+              <p><strong>评分:</strong> {{ movie.rating ? movie.rating : '暂无' }}</p>
+              <!-- 操作按钮 -->
+              <p>
+                <button @click="goToCinemas(movie.id)" style="margin-left: 10px;">选择影院</button>
+                <button @click="goToMovieDetail(movie.id)" style="margin-left: 10px;">查看详情</button>
+              </p>
+              <p>
+                <button v-if="isAdmin" @click="deleteMovie(movie.id)" style="margin-left: 10px;">删除电影</button>
+                <button v-if="isAdmin" @click="goToEditMovie(movie.id)" style="margin-left: 10px;">编辑电影</button>
+              </p>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
     <!-- 在 </ul> 结束标签后添加如下代码 -->
     <div class="cinema-list-section">
       <h2>热门影院</h2>
@@ -198,79 +216,16 @@ export default {
 .carousel-wrapper {
   margin-bottom: 30px;
 }
-.movie-list {
-  padding: 20px;
+.movie-poster {
+  width: 100%;             /* 占满卡片宽度 */
+  height: 300px;            /* 固定高度 */
+  object-fit: cover;        /* 图片等比缩放并裁剪 */
+  border-radius: 8px;       /* 可选圆角 */
+  transition: transform 0.3s ease;
 }
 
-.movie-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
-
-.info {
-  margin-left: 20px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #369d6b;
-}
-
-.top-buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-}
-
-.top-buttons button {
-  padding: 6px 12px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.top-buttons button:hover {
-  background-color: #369d6b;
-}
-.cinema-list-section {
-  margin-top: 40px;
-}
-
-.cinema-item {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  padding: 10px 0;
-}
-
-.cinema-item img {
-  margin-right: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.cinema-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.cinema-info h4 {
-  margin: 0;
+.movie-poster:hover {
+  transform: scale(1.02);   /* 可选悬停放大效果 */
 }
 
 </style>

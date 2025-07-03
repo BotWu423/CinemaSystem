@@ -101,17 +101,5 @@ export default {
 </script>
 
 <style scoped>
-.cinema-list {
-  padding: 20px;
-}
 
-.cinema-item {
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
-.info button {
-  width: 100%; /* 按钮宽度填满父容器 */
-  margin-top: 10px;
-}
 </style>

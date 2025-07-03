@@ -141,39 +141,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.edit-screening form {
-  max-width: 500px;
-  margin: 0 auto;
-}
 
-form label {
-  display: block;
-  margin-top: 10px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  margin-bottom: 12px;
-}
-
-.form-actions {
-  margin-top: 20px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #369d6b;
-}
 </style>

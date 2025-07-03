@@ -136,48 +136,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.room-management {
-  padding: 20px;
-}
 
-.add-form {
-  margin-bottom: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.add-form label {
-  display: flex;
-  flex-direction: column;
-}
-
-.add-form input {
-  padding: 6px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.add-form button {
-  width: fit-content;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.room-list table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.room-list th,
-.room-list td {
-  border: 1px solid #ccc;
-  text-align: center;
-  padding: 8px;
-}
 </style>

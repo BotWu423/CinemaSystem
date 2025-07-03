@@ -8,7 +8,7 @@
         <h4>放映厅: {{ showtime.screeningRoom.name }}</h4>
         <p>开始时间: {{ formatTime(showtime.startTime) }}</p>
         <p>票价: ¥{{ showtime.price }}</p>
-        <button @click="bookSeats(showtime.id, showtime.screeningRoom.id)">选座购票</button>
+        <Button @click="bookSeats(showtime.id, showtime.screeningRoom.id)">选座购票</Button>
       </li>
     </ul>
     <div v-if="isAdmin" class="admin-actions">
@@ -99,13 +99,5 @@ export default {
 </script>
 
 <style scoped>
-.showtime-list {
-  padding: 20px;
-}
 
-.showtime-item {
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
 </style>

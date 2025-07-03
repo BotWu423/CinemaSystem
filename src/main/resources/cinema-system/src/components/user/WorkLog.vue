@@ -3,7 +3,7 @@
     <h1>每日工作记录</h1>
     <div class="log-form">
       <textarea v-model="newLogContent" placeholder="请输入今日工作内容..." rows="4"></textarea>
-      <button @click="submitLog">提交记录</button>
+      <Button @click="submitLog">提交记录</Button>
     </div>
     <h2>历史记录</h2>
     <ul class="log-list">
@@ -71,51 +71,5 @@ export default {
 </script>
 
 <style scoped>
-.work-log-page {
-  padding: 30px;
-}
-.log-form {
-  margin-bottom: 24px;
-}
-textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-button {
-  background-color: #409eff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-weight: bold;
-}
-button:hover {
-  background-color: #1976d2;
-}
-.log-list {
-  list-style: none;
-  padding: 0;
-}
-.log-item {
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: #f9f9f9;
-}
-.log-content {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-.log-meta {
-  font-size: 14px;
-  color: #888;
-  display: flex;
-  gap: 20px;
-}
+
 </style> 

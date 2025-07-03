@@ -10,9 +10,9 @@
           <el-form-item label="密码">
             <el-input v-model="form.password" type="password" show-password placeholder="请输入密码" />
           </el-form-item>
-          <el-button type="primary" @click="handleLogin" style="width: 100%">登录</el-button>
+          <el-Button type="primary" @click="handleLogin" style="width: 100%">登录</el-Button>
         </el-form>
-        <el-button type="success" @click="goToRegister" style="width: 100%; margin-top: 10px;">注册</el-button>
+        <el-Button type="success" @click="goToRegister" style="width: 100%; margin-top: 10px;">注册</el-Button>
       </el-card>
     </el-main>
   </el-container>

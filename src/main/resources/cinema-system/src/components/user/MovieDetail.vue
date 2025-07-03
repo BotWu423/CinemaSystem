@@ -19,12 +19,12 @@
           <span class="comment-user">{{ comment.user.username }}</span>：
           <span class="comment-content">{{ comment.content }}</span>
           <span class="comment-time">{{ formatTime(comment.createTime) }}</span>
-          <button v-if="canDelete(comment)" @click="deleteComment(comment.id)">删除</button>
+          <Button v-if="canDelete(comment)" @click="deleteComment(comment.id)">删除</Button>
         </li>
       </ul>
       <div class="add-comment">
         <textarea v-model="newComment" placeholder="写下你的评价..." rows="2"></textarea>
-        <button @click="submitComment" :disabled="!newComment.trim()">发表评论</button>
+        <Button @click="submitComment" :disabled="!newComment.trim()">发表评论</Button>
       </div>
     </div>
   </div>
@@ -134,58 +134,5 @@ export default {
 </script>
 
 <style scoped>
-.movie-detail {
-  padding: 30px;
-}
-.info {
-  margin-top: 20px;
-}
-img {
-  margin-top: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.comment-section {
-  margin-top: 40px;
-  border-top: 1px solid #eee;
-  padding-top: 20px;
-}
-.comment-item {
-  margin-bottom: 10px;
-}
-.comment-user {
-  font-weight: bold;
-  margin-right: 8px;
-}
-.comment-content {
-  margin-right: 8px;
-}
-.comment-time {
-  color: #888;
-  font-size: 12px;
-  margin-left: 8px;
-}
-.add-comment {
-  margin-top: 16px;
-}
-.add-comment textarea {
-  width: 100%;
-  resize: vertical;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  padding: 6px;
-}
-.add-comment button {
-  margin-top: 8px;
-  padding: 6px 16px;
-  background: #42b983;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.add-comment button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
+
 </style> 

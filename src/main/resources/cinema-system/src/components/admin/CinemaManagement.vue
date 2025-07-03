@@ -111,38 +111,5 @@ export default {
 </script>
 
 <style scoped>
-.add-cinema-form {
-  margin-bottom: 40px;
-}
-label {
-  display: block;
-  margin-top: 10px;
-}
-input,
-textarea {
-  width: 100%;
-  padding: 6px;
-  margin-top: 4px;
-}
-button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #369d6b;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th,
-td {
-  border: 1px solid #ccc;
-  padding: 8px;
-}
+
 </style>
