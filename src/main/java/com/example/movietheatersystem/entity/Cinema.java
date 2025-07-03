@@ -84,14 +84,11 @@ public class Cinema {
         this.screeningRooms = screeningRooms;
     }
 
-    // Helper methods to manage relationships
-    public void addScreeningRoom(ScreeningRoom screeningRoom) {
-        screeningRooms.add(screeningRoom);
-        screeningRoom.setCinema(this);
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
-    public void removeScreeningRoom(ScreeningRoom screeningRoom) {
-        screeningRooms.remove(screeningRoom);
-        screeningRoom.setCinema(null);
-    }
 }

@@ -125,48 +125,5 @@ export default {
 </script>
 
 <style scoped>
-.edit-movie {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.form-actions {
-  margin-top: 20px;
-}
-
-button {
-  padding: 10px 15px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #369d6b;
-}
 </style>

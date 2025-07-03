@@ -10,7 +10,7 @@
         <li><strong>邮箱：</strong>{{ userInfo.email }}</li>
         <li><strong>手机号：</strong>{{ userInfo.phone }}</li>
       </ul>
-      <button class="change-password-btn" @click="showChangePwd = true">修改密码</button>
+      <Button class="change-password-btn" @click="showChangePwd = true">修改密码</Button>
       <div v-if="showChangePwd" class="change-pwd-modal">
         <div class="modal-content">
           <label>原密码：</label>
@@ -18,8 +18,8 @@
           <label>新密码：</label>
           <input type="password" v-model="newPassword" placeholder="请输入新密码" />
           <div class="modal-actions">
-            <button @click="changePassword">提交</button>
-            <button @click="showChangePwd = false">取消</button>
+            <Button @click="changePassword">提交</Button>
+            <Button @click="showChangePwd = false">取消</Button>
           </div>
         </div>
       </div>
@@ -45,11 +45,11 @@
             <p><strong>下单时间：</strong>{{ formatTime(order.createTime) }}</p>
             <p><strong>状态：</strong>{{ getOrderStatusText(order.status) }}</p>
           </div>
-          <button 
+          <Button
             class="cancel-order-btn" 
             v-if="order.status !== 'CANCELLED'" 
             @click="cancelOrder(order.id)"
-          >取消订单</button>
+          >取消订单</Button>
         </li>
       </ul>
     </div>
@@ -269,92 +269,6 @@ export default {
 
 
 <style scoped>
-.profile-page {
-  padding: 30px;
-}
 
-.order-list, .comment-list, .activity-list {
-  list-style: none;
-  padding: 0;
-}
-
-.order-item, .comment-item, .activity-item {
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: #f9f9f9;
-}
-
-.order-header {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.order-info p, .comment-item p, .activity-item p {
-  margin: 4px 0;
-}
-
-.cancel-order-btn {
-  background-color: #ff4d4f;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  margin-top: 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.cancel-order-btn:hover {
-  background-color: #d9363e;
-}
-
-.info-section {
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
-  background-color: #f9f9f9;
-}
-.info-list {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 12px;
-}
-.change-password-btn {
-  background-color: #409eff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.change-password-btn:hover {
-  background-color: #1976d2;
-}
-.change-pwd-modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-.modal-content {
-  background: #fff;
-  padding: 24px;
-  border-radius: 8px;
-  min-width: 300px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-.modal-actions {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
 </style>
 

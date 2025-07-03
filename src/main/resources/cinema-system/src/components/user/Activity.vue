@@ -126,23 +126,5 @@ export default {
 </script>
 
 <style scoped>
-.activity-page { padding: 30px; }
-.publish-form { margin-bottom: 20px; }
-.activity-item { margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-.add-activity-btn {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 30px;
-}
-.add-activity-btn button {
-  padding: 8px 20px;
-  background-color: #42b983;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.add-activity-btn button:hover {
-  background-color: #369d6b;
-}
+
 </style> 

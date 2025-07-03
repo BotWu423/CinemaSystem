@@ -4,10 +4,10 @@
 
 <template>
   <!-- 查看员工按钮 -->
-  <button @click="fetchEmployees" class="view-employees-btn">查看员工</button>
+  <Button @click="fetchEmployees" class="view-employees-btn">查看员工</Button>
   <!-- 新增员工按钮（仅当已显示员工列表时出现） -->
   <div v-if="showEmployees && isAdmin">
-    <button @click="addEmployeeForm" class="add-employee-btn">新增员工</button>
+    <Button @click="addEmployeeForm" class="add-employee-btn">新增员工</Button>
   </div>
 
   <!-- 新增员工表单 -->
@@ -22,8 +22,8 @@
         <label>电话:</label>
         <input type="text" v-model="newEmployee.phone" />
       </div>
-      <button type="submit">提交</button>
-      <button @click="isAddingEmployee = false" type="button">取消</button>
+      <Button type="submit">提交</Button>
+      <Button @click="isAddingEmployee = false" type="button">取消</Button>
     </form>
   </div>
   <!-- 修改员工表单 -->
@@ -232,8 +232,9 @@ export default {
       }
     },
     addEmployeeForm() {
-      this.isAddingEmployee = true;
+      this.isAddingEmployee = !this.isAddingEmployee;
     },
+
     async addEmployee() {
       const cinemaId = this.$route.query.cinemaId;
       const token = localStorage.getItem('token');
@@ -374,200 +375,7 @@ export default {
 };
 </script>
 <style scoped>
-.delete-employee-btn {
-  margin-top: 5px;
-  padding: 4px 8px;
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-}
 
-.delete-employee-btn:hover {
-  background-color: #c0392b;
-}
-
-.view-employees-btn {
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.view-employees-btn:hover {
-  background-color: #2980b9;
-}
-
-.employee-list {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #eee;
-}
-
-.employee-item {
-  border-bottom: 1px solid #eee;
-  padding: 10px 0;
-}
-
-.employee-item:last-child {
-  border-bottom: none;
-}
-
-.cinema-detail {
-  padding: 20px;
-}
-
-.cinema-info {
-  display: flex;
-  margin-bottom: 30px;
-}
-
-.poster-section {
-  flex: 1;
-  max-width: 300px;
-  margin-right: 30px;
-}
-
-.cinema-poster {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.basic-info {
-  flex: 2;
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.basic-info h2 {
-  margin-top: 0;
-}
-
-.movie-list {
-  list-style: none;
-  padding: 0;
-}
-
-.movie-item {
-  display: flex;
-  border-bottom: 1px solid #eee;
-  padding: 20px 0;
-  margin-bottom: 20px;
-}
-
-.movie-poster {
-  width: 150px;
-  margin-right: 20px;
-}
-
-.movie-poster img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-.movie-details {
-  flex: 1;
-}
-.comment-section {
-  margin-top: 40px;
-  border-top: 1px solid #eee;
-  padding-top: 20px;
-}
-.comment-item {
-  margin-bottom: 10px;
-}
-.comment-user {
-  font-weight: bold;
-  margin-right: 8px;
-}
-.comment-content {
-  margin-right: 8px;
-}
-.comment-time {
-  color: #888;
-  font-size: 12px;
-  margin-left: 8px;
-}
-.add-comment {
-  margin-top: 16px;
-}
-.add-comment textarea {
-  width: 100%;
-  resize: vertical;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  padding: 6px;
-}
-.add-comment button {
-  margin-top: 8px;
-  padding: 6px 16px;
-  background: #42b983;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.add-comment button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-.add-employee-form {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #f1f1f1;
-  border-radius: 8px;
-}
-
-.add-employee-form div {
-  margin-bottom: 10px;
-}
-
-.add-employee-form label {
-  display: inline-block;
-  width: 80px;
-  font-weight: bold;
-}
-
-.add-employee-form input {
-  padding: 6px;
-  width: 200px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.add-employee-btn {
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #2ecc71;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.add-employee-btn:hover {
-  background-color: #27ae60;
-}
-.edit-employee-btn {
-  margin-top: 5px;
-  padding: 4px 8px;
-  background-color: #e91e63; /* 粉色 */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-}
 
 </style>
+
