@@ -49,23 +49,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.order-success {
-  padding: 20px;
-  text-align: center;
-}
 
-.order-details {
-  margin-top: 20px;
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 8px;
-  display: inline-block;
-  text-align: left;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
 </style>

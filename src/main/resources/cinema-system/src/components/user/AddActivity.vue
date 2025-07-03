@@ -48,39 +48,5 @@ export default {
 </script>
 
 <style scoped>
-.add-activity-page {
-  padding: 30px;
-}
 
-.form {
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-}
-
-.form input, .form textarea {
-  margin-bottom: 12px;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.button-container button {
-  width: calc(50% - 5px);
-  padding: 8px 20px;
-  background-color: #42b983;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.button-container button:hover {
-  background-color: #369d6b;
-}
 </style>

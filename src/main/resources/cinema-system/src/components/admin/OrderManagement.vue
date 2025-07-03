@@ -94,32 +94,5 @@ export default {
 </script>
 
 <style scoped>
-.order-management-page {
-  padding: 30px;
-}
-.order-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-.order-table th, .order-table td {
-  border: 1px solid #eee;
-  padding: 8px 12px;
-  text-align: center;
-}
-.order-table th {
-  background: #f5f5f5;
-}
-.delete-btn {
-  background-color: #ff4d4f;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.delete-btn:hover {
-  background-color: #d9363e;
-}
+
 </style> 

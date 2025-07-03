@@ -1,0 +1,42 @@
+/* src/assets/styles/global.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    background-color: #1e1e1e; /* 深灰色背景 */
+    color: #ffffff; /* 白色文字 */
+}
+
+/* 背景图像样式 */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url('@/assets/image/background-image.jpg'); /* 替换为你的背景图片路径 */
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px); /* 模糊效果 */
+    opacity: 0.7; /* 透明度 */
+}
+:root {
+    --primary-color: #6a5acd; /* 紫色 */
+    --secondary-color: #4b0082; /* 深紫色 */
+    --background-color: #1e1e1e; /* 深灰色背景 */
+    --text-color: #ffffff; /* 白色文字 */
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+button {
+    background-color: var(--primary-color);
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+}

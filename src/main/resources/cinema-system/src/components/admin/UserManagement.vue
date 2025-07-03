@@ -82,31 +82,5 @@ onMounted(fetchUsers);
 </template>
 
 <style scoped>
-.user-management-page {
-  padding: 30px;
-}
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-.user-table th, .user-table td {
-  border: 1px solid #ccc;
-  padding: 8px 12px;
-  text-align: center;
-}
-.user-table th {
-  background: #f5f5f5;
-}
-button {
-  padding: 6px 12px;
-  background-color: #e67e22;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #c97c12;
-}
+
 </style>

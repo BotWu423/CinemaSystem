@@ -184,53 +184,6 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.screening-schedule {
-  padding: 30px;
-}
 
-.add-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.add-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-}
-
-.add-form input {
-  padding: 6px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.add-form button {
-  padding: 8px 16px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.add-form button:hover {
-  background-color: #369d6b;
-}
-
-.screening-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.screening-table th,
-.screening-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-}
 </style>
 
