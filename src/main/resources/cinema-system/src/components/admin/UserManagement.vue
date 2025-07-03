@@ -49,7 +49,7 @@ onMounted(fetchUsers);
 </script>
 
 <template>
-  <div class="user-management-page">
+  <div class="add-movie">
     <h1>用户管理</h1>
     <div v-if="loading">加载中...</div>
     <table v-else class="user-table">

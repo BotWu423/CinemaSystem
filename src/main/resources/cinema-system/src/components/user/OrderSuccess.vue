@@ -1,5 +1,5 @@
 <template>
-  <div class="order-success">
+  <div class="add-movie">
     <h2>订单提交成功！</h2>
     <p>您的订单已成功生成，请查看以下信息：</p>
 

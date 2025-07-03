@@ -1,5 +1,5 @@
 <template>
-  <div class="screening-list">
+  <div class="add-movie">
     <h1>{{ cinemaName }} 的场次信息</h1>
     <div v-if="loading">加载中...</div>
     <div v-else-if="error" style="color: red;">{{ error }}</div>

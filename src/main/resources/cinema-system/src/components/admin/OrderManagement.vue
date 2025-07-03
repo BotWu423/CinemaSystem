@@ -1,5 +1,5 @@
 <template>
-  <div class="order-management-page">
+  <div class="add-movie">
     <h1>订单管理</h1>
     <div v-if="loading">加载中...</div>
     <table v-else class="order-table">

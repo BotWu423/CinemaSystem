@@ -1,91 +1,108 @@
 <template>
-  <div class="profile-page">
-    <h1>个人中心</h1>
+  <div class="add-movie">
+    <h2>个人中心</h2>
 
-    <!-- 个人信息部分 -->
-    <div class="info-section">
-      <h2>个人信息</h2>
-      <ul class="info-list">
-        <li><strong>用户名：</strong>{{ userInfo.username }}</li>
-        <li><strong>邮箱：</strong>{{ userInfo.email }}</li>
-        <li><strong>手机号：</strong>{{ userInfo.phone }}</li>
-      </ul>
-      <Button class="change-password-btn" @click="showChangePwd = true">修改密码</Button>
-      <div v-if="showChangePwd" class="change-pwd-modal">
-        <div class="modal-content">
-          <label>原密码：</label>
-          <input type="password" v-model="oldPassword" placeholder="请输入原密码" />
-          <label>新密码：</label>
-          <input type="password" v-model="newPassword" placeholder="请输入新密码" />
-          <div class="modal-actions">
-            <Button @click="changePassword">提交</Button>
-            <Button @click="showChangePwd = false">取消</Button>
+    <!-- 统一使用表格布局 -->
+    <table class="profile-table">
+      <tbody>
+      <!-- 个人信息 -->
+      <tr>
+        <td colspan="2" class="section-header">个人信息</td>
+      </tr>
+      <tr>
+        <td class="label">用户名：</td>
+        <td>{{ userInfo.username }}</td>
+      </tr>
+      <tr>
+        <td class="label">邮箱：</td>
+        <td>{{ userInfo.email }}</td>
+      </tr>
+      <tr>
+        <td class="label">手机号：</td>
+        <td>{{ userInfo.phone }}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button @click="showChangePwd = true">修改密码</button>
+        </td>
+      </tr>
+
+      <!-- 修改密码弹窗 -->
+      <tr v-if="showChangePwd">
+        <td colspan="2" class="modal-cell">
+          <div class="change-pwd-modal">
+            <label>原密码：
+              <input type="password" v-model="oldPassword" placeholder="请输入原密码" />
+            </label>
+            <label>新密码：
+              <input type="password" v-model="newPassword" placeholder="请输入新密码" />
+            </label>
+            <div class="modal-actions">
+              <button @click="changePassword">提交</button>
+              <button @click="showChangePwd = false">取消</button>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </td>
+      </tr>
 
-    <!-- 订单部分 -->
-    <div v-if="loading">加载中...</div>
-    <div v-else>
-      <h2>我的订单</h2>
-      <div v-if="orders.length === 0">暂无订单记录</div>
-      <ul class="order-list" v-else>
-        <li v-for="order in orders" :key="order.id" class="order-item">
-          <div class="order-header">
-            <strong>订单编号：</strong>{{ order.id }}
-          </div>
-          <div class="order-info">
-            <p><strong>电影名称：</strong>{{ order.screening.movie.title }}</p>
-            <p><strong>放映时间：</strong>{{ formatTime(order.screening.startTime) }}</p>
-            <p><strong>座位信息：</strong>
-              {{ order.details.map(d => `${d.seat.rowNumber}-${d.seat.seatNumber}`).join(', ') }}
-            </p>
-            <p><strong>总价：</strong>¥{{ order.totalPrice }}</p>
-            <p><strong>下单时间：</strong>{{ formatTime(order.createTime) }}</p>
-            <p><strong>状态：</strong>{{ getOrderStatusText(order.status) }}</p>
-          </div>
-          <Button
-            class="cancel-order-btn" 
-            v-if="order.status !== 'CANCELLED'" 
-            @click="cancelOrder(order.id)"
-          >取消订单</Button>
-        </li>
-      </ul>
-    </div>
+      <!-- 我的订单 -->
+      <tr>
+        <td colspan="2" class="section-header">我的订单</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div v-if="loading">加载中...</div>
+          <div v-else-if="orders.length === 0">暂无订单记录</div>
+          <ul v-else class="order-list">
+            <li v-for="order in orders" :key="order.id" class="order-item">
+              <strong>订单编号：</strong>{{ order.id }} &nbsp;&nbsp;
+              <strong>电影名称：</strong>{{ order.screening.movie.title }} &nbsp;&nbsp;
+              <strong>放映时间：</strong>{{ formatTime(order.screening.startTime) }} &nbsp;&nbsp;
+              <strong>总价：</strong>¥{{ order.totalPrice }} &nbsp;&nbsp;
+              <strong>状态：</strong>{{ getOrderStatusText(order.status) }}
+              <button class="action-btn" @click="cancelOrder(order.id)" v-if="order.status !== 'CANCELLED'">取消订单</button>
+            </li>
+          </ul>
+        </td>
+      </tr>
 
-    <!-- 评论部分 -->
-    <div v-if="comments.length > 0">
-      <h2>我的评论</h2>
-      <ul class="comment-list">
-        <li v-for="comment in comments" :key="comment.id" class="comment-item">
-          <p><strong>电影名称：</strong>{{ comment.movie.title }}</p>
-          <p><strong>评论内容：</strong>{{ comment.content }}</p>
-          <p><strong>评论时间：</strong>{{ formatTime(comment.createTime) }}</p>
-          <button @click="deleteComment(comment.id)">删除</button>
-        </li>
-      </ul>
-    </div>
-    <div v-else>
-      <p>暂无评论记录</p>
-    </div>
+      <!-- 我的评论 -->
+      <tr>
+        <td colspan="2" class="section-header">我的评论</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div v-if="comments.length === 0">暂无评论记录</div>
+          <ul v-else class="comment-list">
+            <li v-for="comment in comments" :key="comment.id" class="comment-item">
+              <strong>电影名称：</strong>{{ comment.movie.title }} &nbsp;&nbsp;
+              <strong>评论内容：</strong>{{ comment.content }} &nbsp;&nbsp;
+              <strong>评论时间：</strong>{{ formatTime(comment.createTime) }}
+              <button class="action-btn" @click="deleteComment(comment.id)">删除</button>
+            </li>
+          </ul>
+        </td>
+      </tr>
 
-    <!-- 活动部分 -->
-    <div v-if="activities.length > 0">
-      <h2>我参与的活动</h2>
-      <ul class="activity-list">
-        <li v-for="activity in activities" :key="activity.id" class="activity-item">
-          <p><strong>活动名称：</strong>{{ activity.name }}</p>
-          <p><strong>活动描述：</strong>{{ activity.description }}</p>
-          <p><strong>人数限制：</strong>{{activity.quota}}</p>
-          <p><strong>当前人数：</strong>{{activity.quota-activity.participants.length}}</p>
-          <button @click="leaveActivity(activity.id)">退出活动</button>
-        </li>
-      </ul>
-    </div>
-    <div v-else>
-      <p>暂无参与的活动</p>
-    </div>
+      <!-- 参与的活动 -->
+      <tr>
+        <td colspan="2" class="section-header">我参与的活动</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div v-if="activities.length === 0">暂无参与的活动</div>
+          <ul v-else class="activity-list">
+            <li v-for="activity in activities" :key="activity.id" class="activity-item">
+              <strong>活动名称：</strong>{{ activity.name }} &nbsp;&nbsp;
+              <strong>当前人数：</strong>{{ activity.quota - activity.participants.length }} / {{ activity.quota }} &nbsp;&nbsp;
+              <button class="action-btn" @click="leaveActivity(activity.id)">退出活动</button>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -269,6 +286,122 @@ export default {
 
 
 <style scoped>
+.profile-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
 
+.section-header {
+  background-color: #333;
+  color: var(--primary-color);
+  font-size: 18px;
+  text-align: left;
+  padding: 15px;
+}
+
+.label {
+  width: 150px;
+  padding: 10px;
+  vertical-align: top;
+  font-weight: bold;
+  background-color: #2e2e2e;
+}
+
+.modal-cell {
+  padding: 10px;
+  background-color: #2e2e2e;
+}
+
+.change-pwd-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.change-pwd-modal input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--primary-color);
+  background-color: #2e2e2e;
+  color: var(--text-color);
+}
+
+.modal-actions button {
+  margin-right: 10px;
+}
+
+/* 订单列表 */
+.order-list {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.order-item {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e2e2e;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+/* 评论列表 */
+.comment-list {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.comment-item {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e2e2e;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+/* 活动列表 */
+.activity-list {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.activity-item {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e2e2e;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+/* 按钮通用样式 */
+.action-btn {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.action-btn:hover {
+  background-color: var(--secondary-color);
+}
 </style>
+
 

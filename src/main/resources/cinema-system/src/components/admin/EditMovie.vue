@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-movie">
+  <div class="add-movie">
     <h2>编辑电影</h2>
     <div v-if="loading">加载中...</div>
     <form v-else @submit.prevent="submitForm">

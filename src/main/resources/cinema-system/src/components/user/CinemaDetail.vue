@@ -14,18 +14,24 @@
   <div v-if="isAddingEmployee" class="add-employee-form">
     <h3>新增员工</h3>
     <form @submit.prevent="addEmployee">
-      <div>
-        <label>姓名:</label>
-        <input type="text" v-model="newEmployee.name" required />
+      <!-- 使用 form-group 包裹 -->
+      <div class="form-group">
+        <label>姓名：
+          <input type="text" v-model="newEmployee.name" required />
+        </label>
       </div>
-      <div>
-        <label>电话:</label>
-        <input type="text" v-model="newEmployee.phone" />
+
+      <div class="form-group">
+        <label>电话：
+          <input type="text" v-model="newEmployee.phone" />
+        </label>
       </div>
-      <Button type="submit">提交</Button>
-      <Button @click="isAddingEmployee = false" type="button">取消</Button>
+
+      <button type="submit" :disabled="!newEmployee.name">提交</button>
+      <button type="button" @click="isAddingEmployee = false" style="margin-left: 10px;">取消</button>
     </form>
   </div>
+
   <!-- 修改员工表单 -->
   <div v-if="isEditingEmployee" class="edit-employee-form">
     <h3>修改员工信息</h3>
@@ -58,7 +64,7 @@
     </ul>
   </div>
 
-  <div class="cinema-detail">
+  <div class="add-movie">
     <h1>{{ cinema.name }}</h1>
 
     <div class="cinema-info" style="align-items: flex-start;">
@@ -89,23 +95,24 @@
         <ul class="movie-list">
           <li v-for="movie in movies" :key="movie.id" class="movie-item">
             <div class="movie-poster">
-              <img :src="movie.posterUrl" :alt="movie.title + ' 海报'">
+              <img :src="movie.posterUrl" :alt="movie.title + ' 海报'" class="poster-img" />
             </div>
             <div class="movie-details">
               <h3>{{ movie.title }}</h3>
-              <p><strong>导演:</strong> {{ movie.director }}</p>
-              <p><strong>演员:</strong> {{ movie.actors }}</p>
-              <p><strong>类型:</strong> {{ movie.type }}</p>
-              <p><strong>时长:</strong> {{ movie.duration }} 分钟</p>
-              <p><strong>评分:</strong> {{ movie.rating ? movie.rating : '暂无' }}</p>
-              <p><strong>上映日期:</strong> {{ movie.releaseDate }}</p>
-              <p><strong>简介:</strong> {{ movie.description }}</p>
+              <p><strong>导演：</strong>{{ movie.director }}</p>
+              <p><strong>演员：</strong>{{ movie.actors }}</p>
+              <p><strong>类型：</strong>{{ movie.type }}</p>
+              <p><strong>时长：</strong>{{ movie.duration }} 分钟</p>
+              <p><strong>评分：</strong>{{ movie.rating ? movie.rating : '暂无' }}</p>
+              <p><strong>上映日期：</strong>{{ movie.releaseDate }}</p>
+              <p><strong>简介：</strong>{{ movie.description }}</p>
               <button @click="goToScreenings(movie.id)">查看场次</button>
             </div>
           </li>
         </ul>
       </div>
     </div>
+
     <div class="comment-section">
       <h2>评价区</h2>
       <div v-if="comments.length === 0">暂无评论</div>
@@ -375,7 +382,51 @@ export default {
 };
 </script>
 <style scoped>
+.movie-list {
+  list-style: none;
+  padding: 0;
+}
 
+.movie-item {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #2e2e2e;
+  border-radius: 6px;
+}
 
+.movie-poster {
+  flex: 0 0 150px; /* 固定宽度 */
+  height: 220px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-details h3 {
+  margin-top: 0;
+}
+
+.movie-details p {
+  margin: 4px 0;
+}
+
+.movie-details button {
+  align-self: flex-start;
+  margin-top: 10px;
+}
 </style>
-

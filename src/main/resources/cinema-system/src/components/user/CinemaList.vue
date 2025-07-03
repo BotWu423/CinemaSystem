@@ -1,5 +1,5 @@
 <template>
-  <div class="cinema-list">
+  <div class="add-movie">
     <h1>电影院列表</h1>
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
       <button @click="goToMovieRanking">电影榜单</button>

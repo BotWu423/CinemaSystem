@@ -1,5 +1,5 @@
 <template>
-  <div class="work-log-page">
+  <div class="add-movie">
     <h1>每日工作记录</h1>
     <div class="log-form">
       <textarea v-model="newLogContent" placeholder="请输入今日工作内容..." rows="4"></textarea>

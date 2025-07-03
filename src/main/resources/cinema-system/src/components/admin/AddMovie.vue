@@ -2,18 +2,39 @@
   <div class="add-movie">
     <h2>添加新电影</h2>
     <form @submit.prevent="submitMovie">
-      <label>电影名称：<input v-model="movie.title" required /></label><br />
-      <label>导演：<input v-model="movie.director" required /></label><br />
-      <label>演员：<input v-model="movie.actors" /></label><br />
-      <label>类型：<input v-model="movie.type" /></label><br />
-      <label>时长（分钟）：<input v-model.number="movie.duration" type="number" /></label><br />
-      <label>上映日期：<input v-model="movie.releaseDate" type="date" /></label><br />
-      <label>评分：<input v-model.number="movie.rating" type="number" step="0.1" /></label><br />
-      <label>简介：<textarea v-model="movie.description"></textarea></label><br />
+      <!-- 前四个输入框 -->
+      <div class="form-group">
+        <label>电影名称：<input type="text" v-model="movie.title" required /></label>
+      </div>
+      <div class="form-group">
+        <label>导演：<input type="text" v-model="movie.director" required /></label>
+      </div>
+      <div class="form-group">
+        <label>演员：<input type="text" v-model="movie.actors" /></label>
+      </div>
+      <div class="form-group">
+        <label>类型：<input type="text" v-model="movie.type" /></label>
+      </div>
+
+      <!-- 后四个输入框 -->
+      <div class="form-group">
+        <label>时长（分钟）：<input v-model.number="movie.duration" type="number" /></label>
+      </div>
+      <div class="form-group">
+        <label>上映日期：<input v-model="movie.releaseDate" type="date" /></label>
+      </div>
+      <div class="form-group">
+        <label>评分：<input v-model.number="movie.rating" type="number" step="0.1" min="0" /></label>
+      </div>
+      <div class="form-group">
+        <label>简介：<textarea v-model="movie.description"></textarea></label>
+      </div>
+
       <button type="submit">提交</button>
     </form>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';

@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-screening">
+  <div class="add-movie">
     <h2>编辑场次</h2>
     <form @submit.prevent="submitForm">
       <label>

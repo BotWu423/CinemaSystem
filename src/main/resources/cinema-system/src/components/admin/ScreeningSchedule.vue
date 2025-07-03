@@ -1,41 +1,49 @@
 <template>
-  <div class="screening-schedule">
+  <div class="add-movie">
     <h2>添加新场次</h2>
     <!-- 添加场次表单 -->
     <form @submit.prevent="addScreening" class="add-form">
-      <label>
-        电影:
-        <select v-model.number="newScreening.movieId" required>
-          <option value="">请选择电影</option>
-          <option v-for="movie in movies" :key="movie.id" :value="movie.id">
-            {{ movie.title }}
-          </option>
-        </select>
-      </label>
+      <div class="form-group">
+        <label>
+          电影:
+          <select v-model.number="newScreening.movieId" required>
+            <option value="">请选择电影</option>
+            <option v-for="movie in movies" :key="movie.id" :value="movie.id">
+              {{ movie.title }}
+            </option>
+          </select>
+        </label>
+      </div>
 
-      <label>
-        放映厅:
-        <select v-model.number="newScreening.roomId" required>
-          <option value="">请选择放映厅</option>
-          <option v-for="room in screeningRooms" :key="room.id" :value="room.id">
-            [{{room.cinemaName}}] {{ room.name }}
-          </option>
-        </select>
-      </label>
+      <div class="form-group">
+        <label>
+          放映厅:
+          <select v-model.number="newScreening.roomId" required>
+            <option value="">请选择放映厅</option>
+            <option v-for="room in screeningRooms" :key="room.id" :value="room.id">
+              [{{ room.cinemaName }}] {{ room.name }}
+            </option>
+          </select>
+        </label>
+      </div>
 
+      <div class="form-group">
+        <label>
+          开始时间:
+          <input v-model="newScreening.startTime" type="datetime-local" required />
+        </label>
+      </div>
 
-      <label>
-        开始时间:
-        <input v-model="newScreening.startTime" type="datetime-local" required />
-      </label>
-
-      <label>
-        票价:
-        <input v-model.number="newScreening.price" type="number" step="0.01" required />
-      </label>
+      <div class="form-group">
+        <label>
+          票价:
+          <input v-model.number="newScreening.price" type="number" step="0.01" required />
+        </label>
+      </div>
 
       <button type="submit">提交</button>
     </form>
+
 
     <!-- 已有场次列表 -->
     <h3>已有场次</h3>

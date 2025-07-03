@@ -1,10 +1,18 @@
 <template>
-  <div>
+  <div class="add-movie">
     <h2>电影榜单</h2>
-    <h2 style="margin-top: 40px;">票房榜（柱状图）</h2>
-    <div ref="barChart" style="width: 100%; height: 400px;"></div>
-    <h2 style="margin-top: 40px;">热度榜（折线图）</h2>
-    <div ref="lineChart" style="width: 100%; height: 400px;"></div>
+
+    <!-- 票房榜 -->
+    <div class="chart-container">
+      <h3>票房榜（柱状图）</h3>
+      <div ref="barChart" class="echarts-container"></div>
+    </div>
+
+    <!-- 热度榜 -->
+    <div class="chart-container">
+      <h3>热度榜（折线图）</h3>
+      <div ref="lineChart" class="echarts-container"></div>
+    </div>
   </div>
 </template>
 
@@ -141,4 +149,25 @@ export default {
     }
   }
 };
-</script> 
+</script>
+<style scoped>
+.add-movie {
+  padding: 20px;
+}
+
+.chart-container {
+  margin-top: 40px;
+  background-color: #2e2e2e;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.echarts-container {
+  width: 100%;
+  height: 400px;
+  background-color: #1e1e1e;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+</style>

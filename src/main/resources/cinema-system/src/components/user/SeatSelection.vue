@@ -229,11 +229,11 @@ const totalRows = computed(() => {
 }
 
 .available {
-  background-color: #e0ffe0;
+  background-color: #c883ea;
 }
 
 .available:hover {
-  background-color: #aaffaa;
+  background-color: #c910e6;
 }
 
 .selected {

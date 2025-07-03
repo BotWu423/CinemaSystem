@@ -54,6 +54,8 @@ button:hover {
 input[type="text"],
 input[type="number"],
 input[type="date"],
+input[type="datetime-local"],
+select,
 textarea {
     width: 100%; /* 宽度占满容器 */
     padding: 10px; /* 内边距 */
@@ -70,6 +72,8 @@ textarea {
 input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="date"]:focus,
+input[type="datetime-local"],
+select,
 textarea:focus {
     border-color: var(--secondary-color); /* 焦点时边框颜色加深 */
 }
@@ -120,12 +124,14 @@ form button[type="submit"]:hover {
 
 /* 表单整体布局 */
 .add-movie form {
-    max-width: 600px; /* 最大宽度 */
-    margin: 0 auto; /* 水平居中 */
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
-    border-radius: 8px; /* 圆角 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 /* 表单标题 */
@@ -133,3 +139,5 @@ form button[type="submit"]:hover {
     margin-bottom: 20px; /* 底部间距 */
     text-align: center; /* 标题居中 */
 }
+
+

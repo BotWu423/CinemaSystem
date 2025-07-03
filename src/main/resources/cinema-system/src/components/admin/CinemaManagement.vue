@@ -1,13 +1,13 @@
 <template>
-  <div class="cinema-management">
+  <div class="add-movie">
     <h1>管理电影院</h1>
 
     <div class="add-cinema-form">
       <h3>添加新电影院</h3>
       <form @submit.prevent="addCinema">
-        <label>影院名称：<input v-model="newCinema.name" required /></label><br />
-        <label>地址：<input v-model="newCinema.address" required /></label><br />
-        <label>联系方式：<input v-model="newCinema.contact" /></label><br />
+        <label>影院名称：<input type="text" v-model="newCinema.name" required /></label><br />
+        <label>地址：<input type="text" v-model="newCinema.address" required /></label><br />
+        <label>联系方式：<input type="text" v-model="newCinema.contact" /></label><br />
         <label>描述：<textarea v-model="newCinema.description"></textarea></label><br />
         <button type="submit">提交</button>
       </form>

@@ -1,16 +1,28 @@
 <template>
-  <div class="edit-cinema">
+  <div class="add-movie">
     <h2>编辑电影院</h2>
     <form @submit.prevent="submitForm">
-      <label>影院名称：<input v-model="cinema.name" required /></label><br />
-      <label>地址：<input v-model="cinema.address" required /></label><br />
-      <label>联系方式：<input v-model="cinema.contact" /></label><br />
-      <label>描述：<textarea v-model="cinema.description"></textarea></label><br />
+      <!-- 统一使用 form-group 包裹 -->
+      <div class="form-group">
+        <label>影院名称：<input type="text" v-model="cinema.name" required /></label>
+      </div>
+      <div class="form-group">
+        <label>地址：<input type="text" v-model="cinema.address" required /></label>
+      </div>
+      <div class="form-group">
+        <label>联系方式：<input type="text" v-model="cinema.contact" /></label>
+      </div>
+      <div class="form-group">
+        <label>描述：<textarea v-model="cinema.description"></textarea></label>
+      </div>
+
+      <!-- 按钮 -->
       <button type="submit">保存更改</button>
       <button type="button" @click="$router.back()" style="margin-left: 10px;">取消</button>
     </form>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';

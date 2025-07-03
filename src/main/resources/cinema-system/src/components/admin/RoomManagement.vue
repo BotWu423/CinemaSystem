@@ -1,24 +1,37 @@
 <template>
-  <div class="room-management">
+  <div class="add-movie">
     <!-- 添加放映室 -->
     <form @submit.prevent="addRoom" class="add-form">
       <h3>添加新放映室</h3>
-      <label>所属影院：
-        <select v-model.number="newRoom.cinemaId" required>
-          <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema.id">
-            {{ cinema.name }}
-          </option>
-        </select>
-      </label>
 
-      <label>名称：
-        <input v-model="newRoom.name" required />
-      </label>
-      <label>座位布局（格式如 "5x8"）：
-        <input v-model="newRoom.layout" placeholder="如 5x8" required />
-      </label>
+      <div class="form-group">
+        <label>
+          所属影院：
+          <select v-model.number="newRoom.cinemaId" required>
+            <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema.id">
+              {{ cinema.name }}
+            </option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          名称：
+          <input type="text" v-model="newRoom.name" required />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          座位布局（格式如 "5x8"）：
+          <input type="text" v-model="newRoom.layout" placeholder="如 5x8" required />
+        </label>
+      </div>
+
       <button type="submit">提交</button>
     </form>
+
 
     <!-- 放映室列表 -->
     <div class="room-list">

@@ -7,7 +7,7 @@
       <button v-if="isAdmin" @click="goToUserManagement" style="margin-left: 10px;">用户管理</button>
       <button v-if="isAdmin" @click="goToOrderManagement" style="margin-left: 10px;">订单管理</button>
       <button v-if="isAdmin" @click="goToWorkLog" style="margin-left: 10px;">每日工作记录</button>
-      <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: auto;">添加新电影</button>
+      <button v-if="isAdmin" @click="goToAddMovie" style="margin-left: 10px;">添加新电影</button>
     </div>
     <!-- 轮播图 -->
     <div class="carousel-wrapper">
@@ -230,62 +230,84 @@ export default {
 </script>
 
 <style scoped>
-.carousel-wrapper {
-  margin-bottom: 30px;
-}
-.movie-poster {
-  width: 100%;             /* 占满卡片宽度 */
-  height: 300px;            /* 固定高度 */
-  object-fit: cover;        /* 图片等比缩放并裁剪 */
-  border-radius: 8px;       /* 可选圆角 */
-  transition: transform 0.3s ease;
+/* 电影卡片样式 */
+.movie-card {
+  background-color: #2e2e2e; /* 灰色背景 */
+  border: 2px solid var(--primary-color); /* 蓝色边框 */
+  color: var(--text-color); /* 白色文字 */
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-.movie-poster:hover {
-  transform: scale(1.02);   /* 可选悬停放大效果 */
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
-/* 固定卡片高度，使用 flex 布局 */
+
+.movie-card h3,
+.movie-card p {
+  color: var(--text-color); /* 强制字体颜色为白色 */
+}
+
+.movie-card .el-card__body {
+  padding: 15px;
+}
+
+.movie-info button {
+  margin-left: 10px;
+}
+
+/* 影院卡片样式 */
 .cinema-card {
+  background-color: #2e2e2e;
+  border: 2px solid var(--primary-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  transition: all 0.3s ease;
   height: 420px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
-/* 图片区域固定高度 */
-.cinema-poster-wrapper {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.cinema-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.cinema-poster {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-}
-
-.cinema-poster:hover {
-  transform: scale(1.05);
-}
-
-/* 信息区域自适应并可滚动（超出时） */
 .cinema-info {
-  flex: 1;
   padding: 15px;
-  overflow-y: auto;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
-/* 按钮固定在底部 */
+.cinema-info h4,
+.cinema-info p {
+  color: var(--text-color);
+}
+
 .common-action-button {
-  margin-top: auto; /* 自动推到底部 */
-  align-self: flex-end; /* 靠右对齐 */
+  margin-top: auto;
+  align-self: flex-end;
+}
+.movie-poster {
+  width: 100%; /* 占满父容器宽度 */
+  height: 300px; /* 固定高度 */
+  object-fit: cover; /* 等比缩放并裁剪 */
+  border-radius: 8px;
+  overflow: hidden;
+  display: block;
 }
 
+/* 影院图片样式 */
+.cinema-poster {
+  width: 100%; /* 占满父容器宽度 */
+  height: 200px; /* 固定高度 */
+  object-fit: cover; /* 等比缩放并裁剪 */
+  border-radius: 8px;
+  overflow: hidden;
+  display: block;
+}
 </style>
