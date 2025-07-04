@@ -43,11 +43,6 @@
         <textarea id="description" v-model="movie.description"></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="posterUrl">海报链接:</label>
-        <input type="url" id="posterUrl" v-model="movie.posterUrl">
-      </div>
-
       <div class="form-actions">
         <button type="submit">保存更改</button>
         <button type="button" @click="$router.back()" style="margin-left: 10px;">取消</button>
