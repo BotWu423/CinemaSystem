@@ -25,7 +25,7 @@
 
       <div class="form-group">
         <label for="duration">时长(分钟):</label>
-        <input type="number" id="duration" v-model.number="movie.duration">
+        <input type="number" id="duration"  v-model.number="movie.duration" min="0">
       </div>
 
       <div class="form-group">

@@ -18,7 +18,7 @@
 
       <!-- 后四个输入框 -->
       <div class="form-group">
-        <label>时长（分钟）：<input v-model.number="movie.duration" type="number" /></label>
+        <label>时长（分钟）：<input v-model.number="movie.duration" type="number" min="0"/></label>
       </div>
       <div class="form-group">
         <label>上映日期：<input v-model="movie.releaseDate" type="date" /></label>

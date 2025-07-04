@@ -29,7 +29,7 @@
 
       <label>
         票价:
-        <input v-model.number="screening.price" type="number" step="0.01" required />
+        <input v-model.number="screening.price" type="number" step="0.01" min="0" required />
       </label>
 
       <div class="form-actions">
