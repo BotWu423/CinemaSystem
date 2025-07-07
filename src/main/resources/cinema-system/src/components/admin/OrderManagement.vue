@@ -14,7 +14,6 @@
           <th>座位</th>
           <th>总价</th>
           <th>下单时间</th>
-          <th>状态</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -29,7 +28,6 @@
           <td>{{ order.seatInfo || '-' }}</td>
           <td>¥{{ order.totalPrice }}</td>
           <td>{{ formatTime(order.createTime) }}</td>
-          <td>{{ getOrderStatusText(order.status) }}</td>
           <td><button class="delete-btn" @click="deleteOrder(order.id)">删除</button></td>
         </tr>
       </tbody>
